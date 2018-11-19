@@ -1,17 +1,30 @@
 'use strict';
 
-const bodyParser = require('body-parser');
+const seeds = require('./seeds/seeds');
+const mongoose = require('mongoose');
 const express = require('express');
 
 const app = express();
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+const db = require('./config/keys').mongoURI;
 
-app.use('/healthcheck', require('./routes/index').router);
-app.use('/login', require('./routes/login').router);
-app.use('/books', require('./routes/books').router);
-app.use('/authors', require('./routes/authors').router);
+mongoose
+  .connect(db, { useNewUrlParser: true })
+  .then(() => {
+    console.log("MongoDB Connect...");
+    seeds();
+    console.log('db initialized with seed docs...');
+  })
+  .catch((error) => console.log(error.mesage));
+
+
+
+app.use(express.urlencoded({ extended: true }));
+
+//this line needed for POST
+app.use(express.json());
+
+app.use(['/recipes', '/'], require('./routes/recipeIndex').router);
 
 app.use((err, req, res, next) => {
   if (err.name === 'UnauthorizedError') {

@@ -7,7 +7,7 @@ class App extends Component {
   componentDidMount() {
     //promises
     axios
-      .get('/healthcheck')
+      .get('/recipes')
       .then(res => {
         console.log(res);
       })
