@@ -8,7 +8,6 @@ module.exports = async () => {
         let recipeObj;
         let doc;
         await recipeArray.forEach(async recipe => {
-            console.log(recipe.instructions);
             recipeObj = new Recipe(recipe);
             doc = await recipeObj.save();
             console.log(doc);

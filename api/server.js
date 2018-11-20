@@ -1,8 +1,10 @@
 'use strict';
 
 const seeds = require('./seeds/seeds');
+const cors = require('cors');
 const mongoose = require('mongoose');
 const express = require('express');
+
 
 const app = express();
 
@@ -17,7 +19,7 @@ mongoose
   })
   .catch((error) => console.log(error.mesage));
 
-
+app.use(cors());
 
 app.use(express.urlencoded({ extended: true }));
 
