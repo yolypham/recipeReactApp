@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { Field, reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { addRecipe } from '../actions/index';
+
 
 class RecipeNew extends Component {
     renderTextField(field) {
@@ -33,42 +35,30 @@ class RecipeNew extends Component {
         )
     }
 
-    onSubmit(values) {
-        // this === component
-        console.log(values);
+    onSubmit() {
+        //this.addRecipe();
     }
 
 
     render() {
-        const { handleSubmit } = this.props;
 
         return (
             <div>
-                <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-                    <Field
-                        name="title"
-                        label="Title:"
-                        component={this.renderTextField}>
+                <form onSubmit={this.onSubmit()}>
+                    <input
+                        type="text"
+                        name="title" />
+                    <input
+                        type="text"
+                        name="ingredients" />
+                    <input
+                        type="text"
+                        name="instructions" />
 
-                    </Field>
-                    <Field
-                        name="ingredients"
-                        label="Ingredients:"
-                        component={this.renderMultiLineField}>
+                    <input
+                        type="text"
+                        name="picture" />
 
-                    </Field>
-                    <Field
-                        name="instructions"
-                        label="Instructions:"
-                        component={this.renderMultiLineField}>
-
-                    </Field>
-                    <Field
-                        name="img"
-                        label="Image:"
-                        component={this.renderTextField}>
-
-                    </Field>
                     <button type="submit">Add</button>
                     <Link to="/">Cancel</Link>
 
@@ -79,26 +69,4 @@ class RecipeNew extends Component {
     }
 }
 
-function validate(values) {
-    const errors = {};
-
-    if (!values.title) {
-        errors.title = "! Please enter a title";
-    }
-    if (!values.ingredients) {
-        errors.ingredients = "! Please enter ingredients";
-    }
-    if (!values.instructions) {
-        errors.instructions = "! Please enter instructions";
-    }
-    if (!values.img) {
-        errors.img = "! Please enter img location and name";
-    }
-    return errors;
-}
-
-
-export default reduxForm({
-    form: 'recipeNewForm',
-    validate
-})(RecipeNew);
+export default connect(null, { addRecipe })(RecipeNew);

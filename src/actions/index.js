@@ -1,14 +1,24 @@
-import fetchRecipes from '../services/recipeService';
+import { getRecipes, postRecipe } from '../services/recipeService';
+import actionTypes from './actionTypes';
 
-export const FETCH_RECIPES = 'FETCH_RECIPES';
-
-export const getRecipes = payload => ({
-    type: FETCH_RECIPES,
-    payload
+// FETCH_RECIPES
+export const getAllRecipes = payload => ({
+    type: actionTypes.FETCH_RECIPES,
+    payload: payload
 });
 
 export const loadRecipes = () => async (dispatch) => {
-    console.log('loadRecipes...');
-    const recipes = await fetchRecipes();
-    dispatch(getRecipes(recipes));
+    const recipes = await getRecipes();
+    dispatch(getAllRecipes(recipes));
+};
+
+// POST_RECIPE
+export const newRecipe = payload => ({
+    type: actionTypes.POST_RECIPE,
+    payload
+});
+
+export const addRecipe = (json) => async (dispatch) => {
+    const recipe = await postRecipe(json);
+    dispatch(newRecipe(recipe));
 };
