@@ -17,6 +17,11 @@ export default function (state = initialState, action) {
                 ...state,
                 recipe: action.payload
             };
+        case actionTypes.DELETE_RECIPE:
+            return {
+                ...state,
+                recipes: action.payload
+            };
         default:
             return state;
     }

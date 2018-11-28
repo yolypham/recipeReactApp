@@ -3,7 +3,7 @@ import recipeReducer from './recipeReducer';
 
 
 const rootReducer = combineReducers({
-    recipeReducer: recipeReducer
+    recipeReducer
 });
 
 export default rootReducer;

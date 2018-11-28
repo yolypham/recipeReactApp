@@ -5,37 +5,9 @@ import { addRecipe } from '../actions/index';
 
 
 class RecipeNew extends Component {
-    renderTextField(field) {
-        return (
-            <div>
-                <label>{field.label}</label>
-                <input
-                    type="text"
-                    {...field.input}>
-                </input>
-                {field.meta.touched ? field.meta.error : ''}
-            </div>
-
-        )
-    }
-
-    renderMultiLineField(field) {
-        return (
-            <div>
-                <label>{field.label}</label>
-                <input
-                    type="textarea"
-                    rows="10"
-                    cols="100"
-                    {...field.input}>
-                </input>
-                {field.meta.touched ? field.meta.error : ''}
-            </div>
-
-        )
-    }
 
     onSubmit() {
+        console.log('clicked to Submit...')
         //this.addRecipe();
     }
 

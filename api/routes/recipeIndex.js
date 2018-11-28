@@ -7,78 +7,85 @@ const Recipe = require('../models/recipeModel');
 
 //GET 
 router
-  .get('/test', (req, res) => res.json({ msg: "Reach recipeIndex" }))
-  .get('/', (req, res) => {
-    Recipe.find({})
-      .then(docs => {
-        res.status(200).send({ message: "Success", payload: docs });
-      })
-      .catch(err => {
-        console.log(err);
-        res.status(500).send({ message: err.message });
-      });
+  .get('/', async (req, res, next) => {
+    try {
+      const docs = await Recipe.find({});
+      res.status(200).send({ data: docs })
+    } catch (e) {
+      next(e);
+    }
   })
-  .get('/:id', async (req, res) => {
-    const { params } = req;
-    const { id } = params;
-    Recipe.find({ _id: id })
-      .then(docs => {
-        res.status(200).send({ message: "Success", payload: docs });
-      })
-      .catch(err => {
-        res.status(500).send({ message: err.message });
-      });
+  .get('/:id', async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const docs = await Recipe.find({ _id: id });
+      res.status(200).send({ data: docs })
+    } catch (e) {
+      next(e);
+    }
   });
 
 //POST
-router.post("/", (req, res) => {
-  const { title, ingredients, instructions, picture } = req.body;
-  // instantiate new recipe model
-  const recipe = new Recipe({
-    title: title,
-    ingredients: ingredients,
-    instructions: instructions,
-    picture: picture
-  });
-  recipe
-    .save()
-    .then(doc => {
-      res.status(201).json({ message: "Success", payload: doc });
-    })
-    .catch(err => {
-      res.status(500).json({ message: err.message });
+router
+  .post('/', async (req, res, next) => {
+    const { title, ingredients, instructions, imgUrl } = req.body;
+    const recipe = new Recipe({
+      title: title,
+      ingredients: ingredients,
+      instructions: instructions,
+      imgUrl: imgUrl
     });
-});
+
+    try {
+      const doc = await recipe.save();
+      res.status(201).send({
+        data: [doc]
+      })
+    } catch (e) {
+      next(e);
+    }
+  });
 
 //DELETE
-router.delete("/:id", (req, res) => {
-  const id = req.params.id;
-  // find and remove it
-  Recipe.findByIdAndRemove({ _id: id }).then(doc => {
-    res
-      .status(200)
-      .send({
-        message: "success",
-        payload: doc
+router
+  .delete('/:id', async (req, res, next) => {
+    const { id } = req.params
+    try {
+      const doc = await Recipe.findByIdAndDelete({ _id: id });
+      res.status(202).send({
+        data: [doc]
       })
-      .catch(err => {
-        res.status(500).send({
-          message: err.message
-        });
-      });
+    } catch (e) {
+      next(e);
+    }
   });
-});
 
-//PUT 
+//PATCH
+router
+  .patch('/patch-user/:userObjectId', async (req, res, next) => {
+    const { userObjectId } = req.params;
+
+    try {
+      const doc = await Recipe.updateMany({
+        user: userObjectId
+      })
+
+      res.status(200).send({ data: [doc] })
+    } catch (e) {
+      next(e)
+    }
+  });
+
+//PUT
 router.put("/:id", (req, res) => {
   const { id } = req.params;
-  const { title, ingredients, instructions, picture } = req.body;
+  const { title, ingredients, instructions, imgUrl } = req.body;
 
   const updateFields = {
     title: title,
     ingredients: ingredients,
     instructions: instructions,
-    picture: picture
+    imgUrl: imgUrl
   };
 
   Recipe.findByIdAndUpdate(id, updateFields)
@@ -95,28 +102,6 @@ router.put("/:id", (req, res) => {
     });
 });
 
-//PATCH 
-router.patch("/:id", (req, res) => {
-  const { id } = req.params;
-  const { picture } = req.body;
-
-  const updateField = {
-    picture: picture
-  };
-
-  Recipe.findByIdAndUpdate(id, updateField)
-    .then(doc => {
-      res.status(200).json({
-        message: "success",
-        payload: doc
-      });
-    })
-    .catch(err => {
-      res.status(500).json({
-        message: err.message
-      });
-    });
-});
 
 exports.router = router;
 
