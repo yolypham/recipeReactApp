@@ -13,10 +13,20 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 
 const styles = theme => ({
-  root: {
+  cardGrid: {
+    padding: `${theme.spacing.unit * 8}px 0`,
+  },
+  card: {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  cardMedia: {
+    paddingTop: '56.25%', // 16:9
+  },
+  cardContent: {
     flexGrow: 1,
   }
-
 });
 
 class RecipeCards extends Component {
