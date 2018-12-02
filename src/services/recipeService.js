@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const URL = 'http://localhost:3001/recipes/';
 
-//GET
+//GET RECIPES
 export const getRecipes = async () => {
     try {
         const res = await axios.get(URL);
@@ -22,6 +22,27 @@ export const getRecipes = async () => {
     // })
     //     .then(resp => resp.json())
     //     .catch((error) => console.log(error));
+};
+
+//GET DETAILS
+export const getRecipeDetails = async (id) => {
+    return fetch(`${URL}${id}`, {
+        method: 'GET',
+        mode: 'CORS',
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(resp => resp.json())
+        .catch((error) => console.log(error));
+
+    // try {
+    //     const res = await axios.get(URL + id);
+    //     return res.data;
+    // } catch (error) {
+    //     console.log(error);
+    // }
 };
 
 //POST

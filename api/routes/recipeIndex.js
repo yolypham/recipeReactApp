@@ -9,7 +9,7 @@ const Recipe = require('../models/recipeModel');
 router
   .get('/', async (req, res, next) => {
     try {
-      const docs = await Recipe.find({});
+      const docs = await Recipe.find({}).populate('user');
       res.status(200).send({ data: docs })
     } catch (e) {
       next(e);

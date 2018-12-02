@@ -2,8 +2,11 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
 import { Link } from 'react-router-dom';
 import { loadRecipes, addRecipe, removeRecipe, updateRecipe } from '../actions';
+import RecipeDetails from './RecipeDetails';
+
 
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -11,8 +14,22 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+import Slide from '@material-ui/core/Slide';
+
 
 const styles = theme => ({
+  appBar: {
+    position: 'relative',
+  },
+  flex: {
+    flex: 1,
+  },
   cardGrid: {
     padding: `${theme.spacing.unit * 8}px 0`,
   },
@@ -29,52 +46,58 @@ const styles = theme => ({
   }
 });
 
+function Transition(props) {
+  return <Slide direction="up" {...props} />;
+}
+
 class RecipeCards extends Component {
+  state = {
+    open: false,
+    selectedRecipe: null
+  };
+
   componentDidMount() {
     this.props.loadRecipes();
-
-    //this for testing post with redux
-    // let json = {
-    //   title: "New record !",
-    //   ingredients: "1/2 cup...",
-    //   instructions: "blah...",
-    //   imgUrl: "somepic.jpg"
-    // };
-
-    //this.props.addRecipe(json);
-    //this.props.loadRecipes();
   }
+
+  handleClickOpen = () => {
+    this.setState({ open: true });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+
+  clickRecipeHandler(recipe) {
+    this.setState({
+      open: true,
+      selectedRecipe: recipe,
+    })
+    console.log('State is...');
+    console.log(this.state);
+  }
+
 
   showRecipes() {
     const { classes, recipes } = this.props;
 
     return _.map(recipes, recipe => {
-      return (
 
+      return (
         <Grid item key={recipe._id} sm={6} md={4} lg={3}>
-          <Card className={classes.card}>
+          <Card className={classes.card}
+            onClick={() => this.clickRecipeHandler(recipe)}>
             <CardMedia
               className={classes.cardMedia}
-              image={recipe.imgUrl} // eslint-disable-line max-len
+              image={recipe.imgUrl}
               title="Image title"
             />
             <CardContent className={classes.cardContent}>
               <Typography gutterBottom variant="h5" component="h2">
                 {recipe.title}
               </Typography>
-              <Typography>
-                <button onClick={() => this.modifyRecipeHandler(recipe._id)}>Update</button>
-                <button onClick={() => this.removeRecipeHandler(recipe._id)}>Delete</button>
-              </Typography>
+
             </CardContent>
-            {/* <CardActions>
-                    <Button size="small" color="primary">
-                      View
-                    </Button>
-                    <Button size="small" color="primary">
-                      Edit
-                    </Button>
-                  </CardActions> */}
           </Card>
         </Grid>
       )
@@ -88,7 +111,6 @@ class RecipeCards extends Component {
     } catch (error) {
       console.log(error)
     }
-
   }
 
   async modifyRecipeHandler(id) {
@@ -100,10 +122,12 @@ class RecipeCards extends Component {
       imgUrl: "somepic.jpg"
     };
     await this.props.updateRecipe(id, json);
-    await this.props.loadRecipes();
   }
 
   render() {
+    const { classes } = this.props;
+    const { selectedRecipe } = this.state;
+    console.log(selectedRecipe);
 
     return (
       <div>
@@ -111,11 +135,34 @@ class RecipeCards extends Component {
           Add new recipe
         </Link>
         <h3>Recipes:</h3>
-
         <div className="recipe-grid">
           <Grid container spacing={8}>
             {this.showRecipes()}
           </Grid>
+          <Dialog
+            fullScreen
+            open={this.state.open}
+            onClose={this.handleClose}
+            TransitionComponent={Transition}
+          >
+            <AppBar className={classes.appBar}>
+              <Toolbar>
+
+                <Typography variant="h6" color="inherit" className={classes.flex}>
+                  Recipe Details
+              </Typography>
+                <IconButton color="inherit" onClick={this.handleClose} aria-label="Close">
+                  <CloseIcon />
+                </IconButton>
+                {/* <Button color="inherit" onClick={this.handleClose}>
+                  Close
+              </Button> */}
+              </Toolbar>
+            </AppBar>
+            <Typography gutterBottom variant="h5" component="h2">
+              <RecipeDetails recipe={selectedRecipe} />
+            </Typography>
+          </Dialog>
         </div>
       </div>
     )

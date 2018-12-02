@@ -28,7 +28,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "server": "nodemon ./index.js --ignore src/",
-    "start": "npm run build && concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
+    "start": "npm run build && concurrently --kill-others-on-fail \"npm run server\" && \"npm run client\"",
     "build": "webpack-dev-server --mode development",
     "build:prod": "webpack src/index.js dist/bundle.js -mode-p"
   },

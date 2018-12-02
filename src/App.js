@@ -4,7 +4,6 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Header from './components/layout/header';
 import Footer from './components/layout/footer';
 import RecipeCards from './components/RecipeCards';
-import RecipeNew from './components/RecipeNew';
 import './App.css';
 
 class App extends Component {
@@ -19,7 +18,6 @@ class App extends Component {
 
         <BrowserRouter>
           <Switch>
-            <Route path="/recipes/new" component={RecipeNew} />
             <Route path="/" component={RecipeCards} />
           </Switch>
         </BrowserRouter>

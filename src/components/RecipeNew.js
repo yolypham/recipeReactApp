@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { addRecipe } from '../actions/index';
 
-
 class RecipeNew extends Component {
 
     onSubmit() {

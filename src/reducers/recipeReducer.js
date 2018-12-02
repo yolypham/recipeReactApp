@@ -12,6 +12,11 @@ export default function (state = initialState, action) {
                 ...state,
                 recipes: action.payload
             };
+        case actionTypes.FETCH_RECIPE_DETAILS:
+            return {
+                ...state,
+                recipe: action.payload
+            };
         case actionTypes.POST_RECIPE:
             return {
                 ...state,
