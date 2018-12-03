@@ -26,8 +26,8 @@ app.use(express.urlencoded({ extended: true }));
 //this line needed for POST
 app.use(express.json());
 
-app.use(['/recipes', '/'], require('./routes/recipeIndex').router);
-app.use(['/users', '/'], require('./routes/userIndex').router);
+app.use(['/recipes'], require('./routes/recipeIndex').router);
+app.use(['/users'], require('./routes/userIndex').router);
 
 app.use((err, req, res, next) => {
   if (err.name === 'UnauthorizedError') {

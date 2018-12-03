@@ -15,16 +15,15 @@ router
             next(e);
         }
     })
-    .get('/:id', async (req, res, next) => {
+    .get('/userid/:userId', async (req, res, next) => {
         try {
-            const { id } = req.params;
-            const docs = await Recipe.find({ _id: id });
+            const { userId } = req.params;
+            const docs = await User.find({ userid: userId });
             res.status(200).send({ data: docs })
         } catch (e) {
             next(e);
         }
     });
-
 
 exports.router = router;
 
