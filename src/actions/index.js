@@ -1,5 +1,20 @@
 import { getRecipes, getRecipeDetails, postRecipe, deleteRecipe, putRecipe } from '../services/recipeService';
+import { getUser } from '../services/userService';
 import actionTypes from './actionTypes';
+
+// FETCH_USER
+export const loadUserActionType = payload => ({
+    type: actionTypes.FETCH_USER,
+    payload: payload
+});
+
+
+export const loadUser = (userid) => async (dispatch) => {
+    const user = await getUser(userid);
+    dispatch(loadUserActionType(user.data));
+};
+
+
 
 // FETCH_RECIPES
 export const loadRecipesActionType = payload => ({

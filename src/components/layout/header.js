@@ -4,17 +4,11 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
-import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import { fade } from '@material-ui/core/styles/colorManipulator';
 import { withStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import MailIcon from '@material-ui/icons/Mail';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 
 const styles = theme => ({
@@ -33,30 +27,6 @@ const styles = theme => ({
         [theme.breakpoints.up('sm')]: {
             display: 'block',
         },
-    },
-    search: {
-        position: 'relative',
-        borderRadius: theme.shape.borderRadius,
-        backgroundColor: fade(theme.palette.common.white, 0.15),
-        '&:hover': {
-            backgroundColor: fade(theme.palette.common.white, 0.25),
-        },
-        marginRight: theme.spacing.unit * 2,
-        marginLeft: 0,
-        width: '100%',
-        [theme.breakpoints.up('sm')]: {
-            marginLeft: theme.spacing.unit * 3,
-            width: 'auto',
-        },
-    },
-    searchIcon: {
-        width: theme.spacing.unit * 9,
-        height: '100%',
-        position: 'absolute',
-        pointerEvents: 'none',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
     },
     inputRoot: {
         color: 'inherit',
@@ -88,14 +58,10 @@ const styles = theme => ({
 });
 
 class Header extends React.Component {
+
     state = {
         anchorEl: null,
-        mobileMoreAnchorEl: null,
-        user: {
-            userid: '',
-            fname: '',
-            lname: ''
-        }
+        mobileMoreAnchorEl: null
     };
 
     handleProfileMenuOpen = event => {
@@ -117,11 +83,28 @@ class Header extends React.Component {
 
     render() {
         const { anchorEl, mobileMoreAnchorEl } = this.state;
-        const { classes } = this.props;
+        const { classes, user } = this.props;
         const isMenuOpen = Boolean(anchorEl);
         const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-        const renderMenu = (
+        console.log(user)
+
+        const userString = (user !== null ? `Welcome ${user[0].fname} ${user[0].lname}` : null);
+
+        const renderLoggedInMenu = (
+            <Menu
+                anchorEl={anchorEl}
+                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                open={isMenuOpen}
+                onClose={this.handleMenuClose}
+            >
+                <MenuItem>{userString}</MenuItem>
+                <MenuItem onClick={this.handleMenuClose}>Sign Out</MenuItem>
+            </Menu>
+        );
+
+        const renderNotLoggedInMenu = (
             <Menu
                 anchorEl={anchorEl}
                 anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
@@ -140,14 +123,7 @@ class Header extends React.Component {
                 anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
                 transformOrigin={{ vertical: 'top', horizontal: 'right' }}
                 open={isMobileMenuOpen}
-                onClose={this.handleMobileMenuClose}
-            >
-                <MenuItem>
-                    <Typography>
-                        {this.state.user.fname}
-                    </Typography>
-                </MenuItem>
-
+                onClose={this.handleMobileMenuClose} >
                 <MenuItem onClick={this.handleProfileMenuOpen}>
                     <IconButton color="inherit">
                         <AccountCircle />
@@ -170,13 +146,11 @@ class Header extends React.Component {
 
                         <div className={classes.grow} />
                         <div className={classes.sectionDesktop}>
-
                             <IconButton
                                 aria-owns={isMenuOpen ? 'material-appbar' : undefined}
                                 aria-haspopup="true"
                                 onClick={this.handleProfileMenuOpen}
-                                color="inherit"
-                            >
+                                color="inherit" >
                                 <AccountCircle />
                             </IconButton>
                         </div>
@@ -187,7 +161,8 @@ class Header extends React.Component {
                         </div>
                     </Toolbar>
                 </AppBar>
-                {renderMenu}
+
+                {userString ? renderLoggedInMenu : renderNotLoggedInMenu}
                 {renderMobileMenu}
             </div>
         );
@@ -196,6 +171,7 @@ class Header extends React.Component {
 
 Header.propTypes = {
     classes: PropTypes.object.isRequired,
+    user: PropTypes.array
 };
 
 export default withStyles(styles)(Header);

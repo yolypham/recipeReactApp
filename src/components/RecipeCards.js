@@ -2,11 +2,9 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
 import { Link } from 'react-router-dom';
 import { loadRecipes, addRecipe, removeRecipe, updateRecipe } from '../actions';
 import RecipeDetails from './RecipeDetails';
-
 
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -21,6 +19,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
+
 
 
 const styles = theme => ({
@@ -73,13 +72,12 @@ class RecipeCards extends Component {
       open: true,
       selectedRecipe: recipe,
     })
-    console.log('State is...');
-    console.log(this.state);
   }
 
 
   showRecipes() {
-    const { classes, recipes } = this.props;
+    const { classes, recipes, user } = this.props;
+    //console.log(user);
 
     return _.map(recipes, recipe => {
 
@@ -127,7 +125,6 @@ class RecipeCards extends Component {
   render() {
     const { classes } = this.props;
     const { selectedRecipe } = this.state;
-    console.log(selectedRecipe);
 
     return (
       <div>
