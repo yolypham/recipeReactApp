@@ -64,11 +64,16 @@ export const postRecipe = (json) => {
 
 // DELETE
 export const deleteRecipe = (id) => {
-    axios.delete(`${URL}${id}`)
-        .then(res => {
-            console.log(res);
-            console.log(res.data);
-        })
+    return axios(`${URL}${id}`, {
+        method: 'DELETE',
+        mode: 'cors',
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'application/json',
+        }
+    }).then(res => {
+        console.log(res);
+    }).catch((error) => console.log(error));
 };
 
 //PUT

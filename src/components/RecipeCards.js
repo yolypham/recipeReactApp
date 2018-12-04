@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { loadRecipes, addRecipe, removeRecipe, updateRecipe } from '../actions';
+import { loadRecipes, addRecipe, removeRecipe as deleteRecipe, updateRecipe } from '../actions';
 import RecipeDetails from './RecipeDetails';
 
 
@@ -12,6 +12,8 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import CloseIcon from '@material-ui/icons/Close';
+import DeleteIcon from '@material-ui/icons/Delete'
+import EditIcon from '@material-ui/icons/Edit'
 import Dialog from '@material-ui/core/Dialog';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
@@ -115,6 +117,17 @@ class RecipeCards extends Component {
     })
   }
 
+  clickDeleteHandler = async (recipe) => {
+    const { _id } = recipe
+    console.log(_id)
+    try {
+      await this.props.deleteRecipe(_id);
+      await this.props.loadRecipes();
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   clickAddRecipeHandler = () => {
     this.setState({
       openAddDialog: true
@@ -141,14 +154,6 @@ class RecipeCards extends Component {
     await this.props.loadRecipes();
   }
 
-  async removeRecipeHandler(id) {
-    try {
-      await this.props.removeRecipe(id);
-      await this.props.loadRecipes();
-    } catch (error) {
-      console.log(error)
-    }
-  }
 
   async modifyRecipeHandler(id) {
     // test Update
@@ -169,18 +174,20 @@ class RecipeCards extends Component {
     const showRecipes = recipes.map(recipe => {
       return (
         <Grid item key={recipe._id} sm={6} md={4} lg={3}>
-          <Card className={classes.card}
-            onClick={() => this.clickRecipeHandler(recipe)}>
+          <Card className={classes.card}>
             <CardMedia
               className={classes.cardMedia}
               image={recipe.imgUrl}
-              title="Image title"
+              title={recipe.title}
+              onClick={() => this.clickRecipeHandler(recipe)}
             />
             <CardContent className={classes.cardContent}>
               <Typography gutterBottom variant="h5" component="h2">
                 {recipe.title}
               </Typography>
-
+              <EditIcon />
+              <DeleteIcon
+                onClick={() => this.clickDeleteHandler(recipe)} />
             </CardContent>
           </Card>
         </Grid>
@@ -249,7 +256,6 @@ class RecipeCards extends Component {
                   margin="normal"
                   variant="outlined"
                 />
-
                 <TextField
                   id="ingredients"
                   label="Ingredients"
@@ -274,7 +280,6 @@ class RecipeCards extends Component {
                   margin="normal"
                   variant="outlined"
                 />
-
                 <TextField
                   id="outlined-name"
                   label="Image"
@@ -284,7 +289,6 @@ class RecipeCards extends Component {
                   margin="normal"
                   variant="outlined"
                 />
-
                 <Button
                   variant="contained"
                   color="primary"
@@ -292,7 +296,7 @@ class RecipeCards extends Component {
                   className={classes.button}
                 >
                   Save
-              </Button>
+                </Button>
               </FormControl>
             </form>
           </Dialog>
@@ -317,7 +321,7 @@ RecipeCards.propTypes = {
 
 export default connect(
   mapStateToProps,
-  { loadRecipes, addRecipe, removeRecipe, updateRecipe }
+  { loadRecipes, addRecipe, deleteRecipe, updateRecipe }
 )(withStyles(styles)(RecipeCards));
 
 

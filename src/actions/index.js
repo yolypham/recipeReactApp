@@ -51,15 +51,9 @@ export const addRecipe = (json) => async (dispatch) => {
 };
 
 // DELETE_RECIPE
-export const deleteRecipeActionType = payload => ({
-    type: actionTypes.DELETE_RECIPE,
-    payload: payload
-});
-
-export const removeRecipe = (id) => async (dispatch) => {
+export const removeRecipe = (id) => async () => {
     console.log('reach action delete');
     const recipe = await deleteRecipe(id);
-    await dispatch(deleteRecipeActionType(recipe));
 };
 
 // PUT_RECIPE
