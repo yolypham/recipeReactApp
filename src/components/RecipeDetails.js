@@ -4,13 +4,9 @@ import PropTypes from 'prop-types';
 class RecipeDetails extends Component {
     render() {
         const { recipe } = this.props;
-        console.log('details....')
-        console.log(recipe);
-        // const found = (recipe !== null ? true : false);
 
         return (
             <div>
-                {/* Title: {found ? recipe.title : null} */}
                 <p>{recipe.title}</p>
                 <p>{recipe.ingredients}</p>
                 <p>{recipe.instructions}</p>

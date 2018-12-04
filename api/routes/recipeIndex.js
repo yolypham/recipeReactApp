@@ -3,6 +3,7 @@
 const express = require('express');
 const router = express.Router();
 
+
 const Recipe = require('../models/recipeModel');
 
 //GET 
@@ -28,12 +29,13 @@ router
 //POST
 router
   .post('/', async (req, res, next) => {
-    const { title, ingredients, instructions, imgUrl } = req.body;
+    const { title, ingredients, instructions, imgUrl, user } = req.body;
     const recipe = new Recipe({
       title: title,
       ingredients: ingredients,
       instructions: instructions,
-      imgUrl: imgUrl
+      imgUrl: imgUrl,
+      user: user
     });
 
     try {

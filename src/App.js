@@ -1,6 +1,5 @@
 
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { loadUser } from './actions';
 import Header from './components/layout/header';
@@ -21,13 +20,7 @@ class App extends Component {
     return (
       <div className="App">
         <Header user={user} />
-
-        <BrowserRouter>
-          <Switch>
-            <Route path="/" component={RecipeCards} />
-          </Switch>
-        </BrowserRouter>
-
+        <RecipeCards user={user} />
         <Footer />
 
       </div>
