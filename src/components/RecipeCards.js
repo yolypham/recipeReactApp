@@ -73,14 +73,15 @@ class RecipeCards extends Component {
   state = {
     openDetailDialog: false,
     openAddDialog: false,
+    openEditDialog: false,
     selectedRecipe: null,
-    form: {
-      title: null,
-      ingredients: null,
-      instructions: null,
-      imgUrl: null,
-      user: null
-    },
+    // form: {
+    //   title: null,
+    //   ingredients: null,
+    //   instructions: null,
+    //   imgUrl: null,
+    //   user: null
+    // },
 
   };
 
@@ -88,11 +89,11 @@ class RecipeCards extends Component {
     this.props.loadRecipes();
   }
 
-  componentWillUpdate(prevProps, prevState) {
-    if (prevProps.recipes.length !== this.props.recipes.length) {
-      console.log(this.props.recipes);
-    }
-  }
+  // componentWillUpdate(prevProps, prevState) {
+  //   if (prevProps.recipes.length !== this.props.recipes.length) {
+  //     console.log(this.props.recipes);
+  //   }
+  // }
 
   handleOpenDetailDialog = () => {
     this.setState({ openDetailDialog: true });
@@ -110,6 +111,14 @@ class RecipeCards extends Component {
     this.setState({ openAddDialog: false });
   };
 
+  handleOpenEditDialog = () => {
+    this.setState({ openEditDialog: true });
+  };
+
+  handleCloseEditDialog = () => {
+    this.setState({ openEditDialog: false });
+  };
+
   clickRecipeHandler(recipe) {
     this.setState({
       openDetailDialog: true,
@@ -119,7 +128,6 @@ class RecipeCards extends Component {
 
   clickDeleteHandler = async (recipe) => {
     const { _id } = recipe
-    console.log(_id)
     try {
       await this.props.deleteRecipe(_id);
       await this.props.loadRecipes();
@@ -134,6 +142,19 @@ class RecipeCards extends Component {
     })
   }
 
+  clickEditHandler = (recipe) => {
+    // const form = {
+    //   title: recipe.title,
+    //   ingredients: recipe.ingredients,
+    //   instructions: recipe.instructions,
+    //   imgUrl: recipe.imgUrl
+    // }
+    this.setState({
+      openEditDialog: true,
+      selectedRecipe: recipe
+    })
+  }
+
   handleChange = (name) => ({ target: { value } }) => {
     this.setState({
       form: {
@@ -143,17 +164,32 @@ class RecipeCards extends Component {
     })
   }
 
+  handleEditChange = name => event => {
+    let recipe = this.state.selectedRecipe;
+    recipe[name] = event.target.value;
+    this.setState({
+      selectedRecipe: recipe,
+    });
+  };
+
   handleSubmit = async () => {
     const { user } = this.props;
     const newRecipe = this.state.form;
     newRecipe.user = user[0]._id;
 
-    console.log(newRecipe);
     await this.props.addRecipe(newRecipe);
     await this.handleCloseAddDialog();
     await this.props.loadRecipes();
   }
 
+  handleSave = async () => {
+    console.log('save clicked');
+    let id = this.state.selectedRecipe._id;
+    let { selectedRecipe } = this.state;
+    await this.props.updateRecipe(id, selectedRecipe);
+    await this.handleCloseEditDialog();
+    await this.props.loadRecipes();
+  }
 
   async modifyRecipeHandler(id) {
     // test Update
@@ -170,7 +206,9 @@ class RecipeCards extends Component {
     const { classes, recipes } = this.props;
     const { selectedRecipe } = this.state;
 
-    console.log(recipes);
+    const rec = (selectedRecipe ? true : false)
+    console.log(selectedRecipe)
+
     const showRecipes = recipes.map(recipe => {
       return (
         <Grid item key={recipe._id} sm={6} md={4} lg={3}>
@@ -185,7 +223,8 @@ class RecipeCards extends Component {
               <Typography gutterBottom variant="h5" component="h2">
                 {recipe.title}
               </Typography>
-              <EditIcon />
+              <EditIcon
+                onClick={() => this.clickEditHandler(recipe)} />
               <DeleteIcon
                 onClick={() => this.clickDeleteHandler(recipe)} />
             </CardContent>
@@ -293,6 +332,81 @@ class RecipeCards extends Component {
                   variant="contained"
                   color="primary"
                   onClick={this.handleSubmit}
+                  className={classes.button}
+                >
+                  Save
+                </Button>
+              </FormControl>
+            </form>
+          </Dialog>
+
+          {/* Dialog for Update Recipe */}
+          <Dialog
+            fullScreen
+            open={this.state.openEditDialog}
+            onClose={this.handleCloseEditDialog}
+            TransitionComponent={Transition}
+          >
+            <AppBar className={classes.appBar}>
+              <Toolbar>
+
+                <Typography variant="h6" color="inherit" className={classes.flex}>
+                  Edit Recipe
+              </Typography>
+                <IconButton color="inherit" onClick={this.handleCloseEditDialog} aria-label="Close">
+                  <CloseIcon />
+                </IconButton>
+              </Toolbar>
+            </AppBar>
+
+            <form className={classes.container} noValidate autoComplete="off">
+              <FormControl className={classes.formControl}>
+                <TextField
+                  id="title"
+                  label="Title"
+                  className={classes.textField}
+                  value={rec ? selectedRecipe.title : ''}
+                  onChange={this.handleEditChange('title')}
+                  margin="normal"
+                  variant="outlined"
+                />
+                <TextField
+                  id="ingredients"
+                  label="Ingredients"
+                  placeholder="Placeholder"
+                  multiline
+                  rows="4"
+                  className={classes.textField}
+                  value={rec ? selectedRecipe.ingredients : ''}
+                  onChange={this.handleEditChange('ingredients')}
+                  margin="normal"
+                  variant="outlined"
+                />
+                <TextField
+                  id="instructions"
+                  label="Instructions"
+                  placeholder="Placeholder"
+                  multiline
+                  rows="10"
+                  className={classes.textField}
+                  value={rec ? selectedRecipe.instructions : ''}
+                  onChange={this.handleEditChange('instructions')}
+                  margin="normal"
+                  variant="outlined"
+                />
+                <TextField
+                  id="outlined-name"
+                  label="Image"
+                  className={classes.textField}
+                  value={rec ? selectedRecipe.imgUrl : ''}
+                  onChange={this.handleEditChange('imgUrl')}
+                  margin="normal"
+                  variant="outlined"
+                />
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={this.handleSave}
                   className={classes.button}
                 >
                   Save
