@@ -7,6 +7,10 @@ import Footer from './components/layout/footer';
 import RecipeCards from './components/RecipeCards';
 import './App.css';
 
+import CssBaseline from '@material-ui/core/CssBaseline';
+
+
+
 const SAMPLE_USER = 'yolypham@email.com';
 
 class App extends Component {
@@ -18,12 +22,13 @@ class App extends Component {
     const { user } = this.props;
 
     return (
-      <div className="App">
+      <React.Fragment>
+        <CssBaseline />
         <Header user={user} />
         <RecipeCards user={user} />
         <Footer />
 
-      </div>
+      </React.Fragment>
     );
   }
 }

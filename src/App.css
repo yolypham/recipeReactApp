@@ -14,3 +14,13 @@ html {
   color: #555;
   text-rendering: optimizeLegibility; /*makes fonts render nicely*/
 }
+
+.action-icons {
+  margin-left: 30px;
+  float: right;
+}
+
+.add-icon{
+  float: right;
+  margin: 0px 5px 10px 0px;
+}

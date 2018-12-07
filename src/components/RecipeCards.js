@@ -6,18 +6,21 @@ import RecipeDetails from './RecipeDetails';
 
 
 import { withStyles } from '@material-ui/core/styles';
+import classNames from 'classnames';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import CloseIcon from '@material-ui/icons/Close';
-import DeleteIcon from '@material-ui/icons/Delete'
+import AddIcon from '@material-ui/icons/Add';
+import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit'
 import Dialog from '@material-ui/core/Dialog';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
+import Fab from '@material-ui/core/Fab';
 import Slide from '@material-ui/core/Slide';
 import TextField from '@material-ui/core/TextField';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -29,6 +32,19 @@ const styles = theme => ({
   },
   flex: {
     flex: 1,
+  },
+  layout: {
+    width: 'auto',
+    marginLeft: theme.spacing.unit * 3,
+    marginRight: theme.spacing.unit * 3,
+    [theme.breakpoints.up(1100 + theme.spacing.unit * 3 * 2)]: {
+      width: 1100,
+      marginLeft: 'auto',
+      marginRight: 'auto',
+    },
+  },
+  fab: {
+    margin: theme.spacing.unit,
   },
   cardGrid: {
     padding: `${theme.spacing.unit * 8}px 0`,
@@ -74,26 +90,12 @@ class RecipeCards extends Component {
     openDetailDialog: false,
     openAddDialog: false,
     openEditDialog: false,
-    selectedRecipe: null,
-    // form: {
-    //   title: null,
-    //   ingredients: null,
-    //   instructions: null,
-    //   imgUrl: null,
-    //   user: null
-    // },
-
+    selectedRecipe: null
   };
 
   componentDidMount() {
     this.props.loadRecipes();
   }
-
-  // componentWillUpdate(prevProps, prevState) {
-  //   if (prevProps.recipes.length !== this.props.recipes.length) {
-  //     console.log(this.props.recipes);
-  //   }
-  // }
 
   handleOpenDetailDialog = () => {
     this.setState({ openDetailDialog: true });
@@ -143,12 +145,6 @@ class RecipeCards extends Component {
   }
 
   clickEditHandler = (recipe) => {
-    // const form = {
-    //   title: recipe.title,
-    //   ingredients: recipe.ingredients,
-    //   instructions: recipe.instructions,
-    //   imgUrl: recipe.imgUrl
-    // }
     this.setState({
       openEditDialog: true,
       selectedRecipe: recipe
@@ -191,17 +187,6 @@ class RecipeCards extends Component {
     await this.props.loadRecipes();
   }
 
-  async modifyRecipeHandler(id) {
-    // test Update
-    let json = {
-      title: "Updated !",
-      ingredients: "1/4 cup...",
-      instructions: "blah...",
-      imgUrl: "somepic.jpg"
-    };
-    await this.props.updateRecipe(id, json);
-  }
-
   render() {
     const { classes, recipes } = this.props;
     const { selectedRecipe } = this.state;
@@ -220,13 +205,18 @@ class RecipeCards extends Component {
               onClick={() => this.clickRecipeHandler(recipe)}
             />
             <CardContent className={classes.cardContent}>
-              <Typography gutterBottom variant="h5" component="h2">
+              <Typography gutterBottom variant="subtitle1">
                 {recipe.title}
               </Typography>
-              <EditIcon
-                onClick={() => this.clickEditHandler(recipe)} />
-              <DeleteIcon
-                onClick={() => this.clickDeleteHandler(recipe)} />
+
+              <div className="action-icons">
+                <Fab color="secondary" aria-label="Edit" size="small" className={classes.fab}>
+                  <EditIcon onClick={() => this.clickEditHandler(recipe)} />
+                </Fab>
+                <Fab aria-label="Delete" size="small" className={classes.fab}>
+                  <DeleteIcon onClick={() => this.clickDeleteHandler(recipe)} />
+                </Fab>
+              </div>
             </CardContent>
           </Card>
         </Grid>
@@ -234,10 +224,15 @@ class RecipeCards extends Component {
     })
 
     return (
-      <div>
-        <button onClick={this.clickAddRecipeHandler}>Add Recipe</button>
-        <h3>Recipes:</h3>
-        <div className="recipe-grid">
+      <main>
+        <div className={classNames(classes.layout, classes.cardGrid)}>
+          <div class="add-icon">
+            Add Recipe
+            <Fab color="primary" aria-label="Add" size="small" className={classes.fab}>
+              <AddIcon onClick={this.clickAddRecipeHandler} />
+            </Fab>
+          </div>
+
           <Grid container spacing={8}>
             {showRecipes}
           </Grid>
@@ -416,7 +411,8 @@ class RecipeCards extends Component {
           </Dialog>
 
         </div>
-      </div>
+
+      </main>
     )
   }
 }
