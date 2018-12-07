@@ -24,3 +24,7 @@ html {
   float: right;
   margin: 0px 5px 10px 0px;
 }
+
+.recipe-img{
+  max-width: 500px;
+}

@@ -47,7 +47,7 @@ const styles = theme => ({
     margin: theme.spacing.unit,
   },
   cardGrid: {
-    padding: `${theme.spacing.unit * 8}px 0`,
+    padding: `${theme.spacing.unit * 4}px 0 0 0`,
   },
   card: {
     height: '100%',
@@ -226,7 +226,7 @@ class RecipeCards extends Component {
     return (
       <main>
         <div className={classNames(classes.layout, classes.cardGrid)}>
-          <div class="add-icon">
+          <div className="add-icon">
             Add Recipe
             <Fab color="primary" aria-label="Add" size="small" className={classes.fab}>
               <AddIcon onClick={this.clickAddRecipeHandler} />
@@ -246,7 +246,6 @@ class RecipeCards extends Component {
           >
             <AppBar className={classes.appBar}>
               <Toolbar>
-
                 <Typography variant="h6" color="inherit" className={classes.flex}>
                   Recipe Details
               </Typography>
