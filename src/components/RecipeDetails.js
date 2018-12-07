@@ -37,13 +37,6 @@ class RecipeDetails extends Component {
         const formatIngredients = (recipe.ingredients).replace(/\n/g, '<br />');
 
         return (
-            // <div className={classes.layout}>
-            //     <p>{recipe.title}</p>
-            //     <p>{recipe.ingredients}</p>
-            //     <p>{recipe.instructions}</p>
-            //     <p>{recipe.imgUrl}</p>
-            // </div>
-
             <div className={classes.layout}>
                 <Typography variant="h4" align="center" color="textPrimary" gutterBottom>
                     {recipe.title}
