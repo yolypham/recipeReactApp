@@ -205,7 +205,7 @@ class RecipeCards extends Component {
               onClick={() => this.clickRecipeHandler(recipe)}
             />
             <CardContent className={classes.cardContent}>
-              <Typography gutterBottom variant="subtitle1">
+              <Typography gutterBottom variant="h6">
                 {recipe.title}
               </Typography>
 
