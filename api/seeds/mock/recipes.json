@@ -3,25 +3,25 @@
         "title": "Peanut Butter Cookies",
         "ingredients": "1 Head of Broccoli\n1/2 Cup Cream\n1/2 Cup Sour Cream\n1 Cup Grated Cheese",
         "instructions": "Preheat the oven to 180C/350F and get out an oven proof dish.\nChop the broccoli into bite sized pieces.\nPlace into the oven proof dish.\nPour over the cream and sour cream.\nStir until the broccoli is well coated in the creams.\nMix through a third of the cheese until well combined.\nTop with the remaining cheese.\nPlace into the oven for 15 to 20 minutes or until crisp and golden.",
-        "imgUrl": "http://localhost:3000/src/assets/images/peanut-butter-cookies-.jpg"
+        "imgUrl": "https://firebasestorage.googleapis.com/v0/b/keto-react-app.appspot.com/o/images%2Fpeanut-butter-cookies-.jpg?alt=media&token=e52faead-380e-4941-8570-e130e0769aa3"
     },
     {
         "title": "Keto Broccoli Casserole",
         "ingredients": "1 cup peanut butter\n1 egg\n1/2 cup erythritol natural sweetener",
         "instructions": "Preheat oven to 350 degrees F.\nCombine all three ingredients in a mixing bowl.\nRoll out 15 one-inch sized cookies onto a baking sheet covered with parchment paper or silicone mat.\nUse a fork to press down on the tops of the cookies.\nBake at 350 degrees for about 10-13 minutes.\nLet cool and serve.\nStore leftovers in a covered container.",
-        "imgUrl": "http://localhost:3000/src/assets/images/keto-broccoli-casserole.jpg"
+        "imgUrl": "https://firebasestorage.googleapis.com/v0/b/keto-react-app.appspot.com/o/images%2Fbroccoli-cheese-soup.jpg?alt=media&token=6f47e054-bd5e-4414-913f-6053814d5299"
     },
     {
         "title": "Keto Fudgy Brownies",
         "ingredients": "175 g butter unsalted, softened\n100 g powdered sweetener\n3 eggs\n40 g cocoa powder unsweetened\n175 g dark chocolate at least 85% cocoa solids, melted\n80 g almond flour",
         "instructions": "Preheat your oven to 180 Celsius / 356 Fahrenheit\nMelt the chocolate\nBlend the VERY soft (or melted) butter, powdered sweetener, eggs and cocoa with a blender or in a food processor.\nAdd the melted chocolate and almond flour and mix until you have a thick, smooth batter.\nLine a rectangular baking tin or small casserole dish with baking / parchment paper.\nCut the paper to size so that it covers the bottom and two sides of the dish.\nGrease the two remaining sides.\nFill the batter into the dish and smoothen the top. Bake 25 minutes or until the top is firm.\nLet the brownies cool before you remove them from the baking tin. They will be VERY soft when warm, but firm up as they cool down. ",
-        "imgUrl": "http://localhost:3000/src/assets/images/Keto-Brownies.jpg"
+        "imgUrl": "https://firebasestorage.googleapis.com/v0/b/keto-react-app.appspot.com/o/images%2FKeto-Brownies.jpg?alt=media&token=f7fe4747-ee10-4dc7-a9f4-846495643c0a"
     },
     {
         "title": "Cauliflower Fried Rice",
         "ingredients": "1 head cauliflower, chopped into florets\n1 small yellow onion, finely chopped\n1/2 cup frozen peas\n1/2cup carrots, cubed\n2 eggs, beaten\n1 Tbsp sesame oil\n1/4 cup low sodium soy sauce\n1 Tbsp light brown sugar\n1/8 tsp. ground ginger\nPinch red pepper flakes\n2 Tbsp green onions, chopped",
         "instructions": "Chop head of cauliflower into florets and place in food processor. Pulse until it starts to resemble rice; set aside.\nHeat a large wok (or skillet) over medium heat and drizzle in sesame oil. Add onion, peas and carrots and saute until tender, about 2 minutes.\nMeanwhile in a small bowl, whisk together soy sauce, brown sugar, ginger and red pepper flakes; set aside.\nSlide veggie mixture to one side of the wok and add in the beaten eggs, scrambling until cooked through and then incorporate with the veggies.\nStir in cauliflower 'rice' and pour the soy sauce over top, mixing well.\nCook for an additional 3 to 4 minutes, until cauliflower is soft and tender.\nTop with green onions, serve and enjoy!",
-        "imgUrl": "http://localhost:3000/src/assets/images/Cauliflower-Fried-Rice.jpg"
+        "imgUrl": "https://firebasestorage.googleapis.com/v0/b/keto-react-app.appspot.com/o/images%2FCauliflower-Fried-Rice.jpg?alt=media&token=bfb1ff58-63d1-4237-b604-8a07dc951f91"
     },
     {
         "title": "Baba Ganush",
@@ -33,18 +33,18 @@
         "title": "Brocoli Cheddar Soup",
         "ingredients": "4 cups Broccoli (cut into florets)\n4 cloves Garlic (minced)\n3 1/2 cups Chicken broth (or vegetable broth, or bone broth)\n1 cup Heavy cream\n3 cups Cheddar cheese (pre-shredded ",
         "instructions": "In a large pot over medium heat, saute garlic for one minute, until fragrant.\nAdd the chicken broth, heavy cream, and chopped broccoli. Increase heat to bring to a boil, then reduce heat and simmer for 10-20 minutes, until broccoli is tender.\nAdd the shredded cheddar cheese gradually, stirring constantly, and continue to stir until melted. (Add 1/2 cup (64 g), simmer and stir until it melts fully, then repeat 1/2 cup (64 g) at a time until all the cheese is used up.) Make sure to keep it at a very low simmer and avoid high heat, to prevent seizing. Remove from heat immediately once all the cheese melts.",
-        "imgUrl": "http://localhost:3000/src/assets/images/broccoli-cheese-soup.jpg"
+        "imgUrl": "https://firebasestorage.googleapis.com/v0/b/keto-react-app.appspot.com/o/images%2Fbroccoli-cheese-soup.jpg?alt=media&token=6f47e054-bd5e-4414-913f-6053814d5299"
     },
     {
         "title": "Creme Brulee",
         "ingredients": "Custard:\n6 egg yolks\n2 tbsp Truvia\n1/2 tsp vanilla extract\n2 1/2 cups heavy whipping cream\n\nCarmelized Topping (optional):\n1/2 tsp sugar\n1/4 tsp cinnamon\n1 tsp Truvia",
         "instructions": "Separate egg yolks in a bowl and add the Truvia and vanilla extract - give it all a nice brisk wisk until uniform and a bit creamy.  Add the heavy cream to a saucepan and heat to just about boiling, and remove from heat.  Pour a little of the hot cream into the egg yolk mixture, and again, give it all a good whisking'.  Now take the yolk mixture and slowly pour it into the rest of hot cream, whisking while you pour.  The mixture will develop some foam, be sure to scoop it out with a spoon or a sieve. \nNow pour the mixture into individual ramekins or other suitable dishes (oven-safe).  This recipe yields about 4-6 servings depending on how generous you are.  Now place the ramekins into a baking dish and pour hot water into the baking dish, about half way up the sides of your ramekins.  Pop them in the oven at 350F/175C for about 20-30 minutes - they're done when they have a good jiggle to them.  Remove from oven and let them cool at room temp in the water bath for about 20 minutes.  Next toss them in the fridge to chill out - they need at least 2 hours to set-up nicely and can be left overnight.\nNow we're almost there.  The best part of a good crème brûlée is the contrasting crispiness of the caramelized top and the velvety smoothness of the underlying custard.  Problem is most keto friendly sugar alcohols don't caramelize - they melt.  So to really get that crunch on top, you need to employ a little bit of our arch-nemesis - sugar.  Now don't panic, using only a half teaspoon across 4 servings only amounts to about 0.5g of resultant carbs.  Phew, let's move on.\nCombine the sugar, cinnamon and Truvia until uniform, and sprinkle evenly over the chilled custards.  If you have a kitchen torch, extra fancy points, torch the top for a few minutes until well caramelized.  No torch, no stress.  Throwing them under the broiler for 2-5 minutes also does the trick.  Serve immediately, you keto rock-star-you.",
-        "imgUrl": "http://localhost:3000/src/assets/images/cremebulee.jpg"
+        "imgUrl": "https://firebasestorage.googleapis.com/v0/b/keto-react-app.appspot.com/o/images%2Fcremebulee.jpg?alt=media&token=1f2ba71f-5e01-4318-b604-bde5c2e67c3c"
     },
     {
         "title": "Keto Pancakes",
         "ingredients": "1 cup almond flour\n2 eggs\n1/4 cup soda water\n2 tbsp coconut oil\n1/4 tsp salt\n1/4 vanilla extract\n2 tbsp erythritol\n\nOptional Toppings:\nWhipped Cream\nBerries\nSugar-free pancake syrup\nGrated 85% Lindt Dark Chocolate",
         "instructions": "There ain't much science to this one folks, get a large bowl and add the ingredients one by one.  With the coconut oil, make sure you liquify before adding it to the mix.  No coconut oil? No biggie, any cooking oil should get results.  Get your mix on with a whisk until everything is blended and homogenous - too runny? Add some more almond flour. Too thick, go ahead and splash in some more soda.  Almond flour consistency is variable from batch to batch and brand to brand, so some tinkering is usually required here.\nGet your griddle or pan up to approx 375F or 200C, and cook these as you would normal pancakes.  Keep a close eye for bubbles, depending on how thick your batch is, bubbles may not be as prominent as your traditional pancake batter.\nI think you guys can take it from here - pop these keto pancakes off the griddle and top to your liking.  I like to go with a little whipped cream, strawberries, sugar-free pancake syrup, and finish it all off with some chocolate zest from a 85% Lindt Chocolate square.  Enjoy! ",
-        "imgUrl": "http://localhost:3000/src/assets/images/keto-pancakes.jpg"
+        "imgUrl": "https://firebasestorage.googleapis.com/v0/b/keto-react-app.appspot.com/o/images%2Fketo-pancakes.jpg?alt=media&token=e2ac1140-0b23-4dda-b53d-e050477bc367"
     }
 ]
