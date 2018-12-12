@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { loadRecipes, addRecipe, removeRecipe as deleteRecipe, updateRecipe } from '../actions';
 import RecipeDetails from './RecipeDetails';
 import ImgDrop from './ImgDrop';
+import Spinner from './Spinner';
 
 import { storage } from '../firebase'
 
@@ -28,7 +29,7 @@ import Slide from '@material-ui/core/Slide';
 import TextField from '@material-ui/core/TextField';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import { Input } from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const styles = theme => ({
   appBar: {
@@ -96,12 +97,26 @@ class RecipeCards extends Component {
     openAddDialog: false,
     openEditDialog: false,
     selectedRecipe: null,
-    imgFile: null,
-    url: ''
+    imgFileUpload: null,
+    processing: false
   };
 
   componentDidMount() {
     this.props.loadRecipes();
+  }
+
+  initState = () => {
+    const current = this.state;
+    console.log(this.state);
+    this.setState = ({
+      ...current,
+      openDetailDialog: false,
+      openAddDialog: false,
+      openEditDialog: false,
+      selectedRecipe: null,
+      imgFileUpload: null,
+      processing: false
+    })
   }
 
   handleOpenDetailDialog = () => {
@@ -175,11 +190,11 @@ class RecipeCards extends Component {
     });
   };
 
-  handleSubmit = (e) => {
+  handleAddSubmit = (e) => {
     //disable auto submit form
     e.preventDefault();
 
-    console.log(this.state);
+    //console.log(this.state);
 
     const { user } = this.props;
     const newRecipe = this.state.form;
@@ -187,73 +202,103 @@ class RecipeCards extends Component {
     //set the loged user
     newRecipe.user = user[0]._id;
 
-    //this.handleUpload();
+    try {
+      this.setState({ processing: true });
 
-    const { imgFile } = this.state;
-    const uploadTask = storage.ref(`images/${imgFile.name}`).put(imgFile);
+      const { imgFileUpload } = this.state;
+      const uploadTask = storage.ref(`images/${imgFileUpload.name}`).put(imgFileUpload);
 
-    uploadTask.on('state_changed',
-      (snapshot) => {
-        // on Progress...
-      },
-      (error) => {
-        console.log(error);
-      },
-      // Upload complete ....
-      async () => {
-        const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
-        console.log('File available at', downloadURL);
+      uploadTask.on('state_changed',
+        (snapshot) => {
+          // on Progress...
+        },
+        (error) => {
+          console.log(error);
+          this.setState({ processing: false });
+        },
+        // Upload complete ....
+        async () => {
+          const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
+          console.log('File available at', downloadURL);
 
-        let newRecipe = this.state.form;
-        newRecipe.imgUrl = downloadURL;
-        await this.props.addRecipe(newRecipe);
-        await this.handleCloseAddDialog();
-        await this.props.loadRecipes();
+          let newRecipe = this.state.form;
+          newRecipe.imgUrl = downloadURL;
+          await this.props.addRecipe(newRecipe);
+          await this.handleCloseAddDialog();
+          await this.props.loadRecipes();
+
+          this.setState({
+            form: null,
+            imgFileUpload: null,
+            processing: false
+          });
+        })
+    } catch (e) {
+      this.setState({
+        form: null,
+        imgFileUpload: null,
+        processing: false
       });
+      console.log(e);
+    }
   }
 
-  handleSave = async (e) => {
+  handleUpdate = async (e) => {
     //disable auto submit form
     e.preventDefault();
+
+    this.setState({ processing: true });
+
     let id = this.state.selectedRecipe._id;
     let { selectedRecipe } = this.state;
-    await this.props.updateRecipe(id, selectedRecipe);
-    await this.handleCloseEditDialog();
-    await this.props.loadRecipes();
-  }
+    let { imgFileUpload } = this.state;
 
-  handleUpload = () => {
-    console.log(this.state);
-    const { imgFile } = this.state;
-    const uploadTask = storage.ref(`images/${imgFile.name}`).put(imgFile);
+    try {
+      if (imgFileUpload) {
+        //if image file need to be uploaded
+        let uploadTask = storage.ref(`images/${imgFileUpload.name}`).put(imgFileUpload);
 
-    uploadTask.on('state_changed',
-      (snapshot) => {
-        // on Progress...
-      },
-      (error) => {
-        console.log(error);
-      },
-      // Upload complete ....
-      async () => {
-        const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
-        console.log('File available at', downloadURL);
+        uploadTask.on('state_changed',
+          (snapshot) => {
+            // on Progress...
+          },
+          (error) => {
+            console.log(error);
+            this.setState({ processing: false });
+          },
+          // Upload complete ....
+          async () => {
+            const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
+            console.log('File available at', downloadURL);
 
-        let newRecipe = this.state.form;
-        newRecipe.imgUrl = downloadURL;
-        await this.props.addRecipe(newRecipe);
-        await this.handleCloseAddDialog();
+            //let newRecipe = this.state.form;
+            selectedRecipe.imgUrl = downloadURL;
+
+            await this.props.updateRecipe(id, selectedRecipe);
+            await this.handleCloseEditDialog();
+            await this.props.loadRecipes();
+            this.setState({ imgFileUpload: null, processing: false });
+            console.log(this.state)
+          })
+      } else {
+        await this.props.updateRecipe(id, selectedRecipe);
+        await this.handleCloseEditDialog();
         await this.props.loadRecipes();
-      });
+        this.setState({ imgFileUpload: null, processing: false });
+      }
+    } catch (e) {
+      console.log(e)
+      this.setState({ imgFileUpload: null, processing: false });
+    }
   }
 
-  imageUpdate = (imgFileName) => {
-    this.setState({ imgFile: imgFileName })
+  imageUpdate = (imgFileUpload) => {
+    this.setState({ imgFileUpload })
   }
 
   render() {
     const { classes, recipes } = this.props;
-    const { selectedRecipe } = this.state;
+    const { selectedRecipe, processing } = this.state;
 
     const hasValue = (selectedRecipe ? true : false)
 
@@ -295,6 +340,8 @@ class RecipeCards extends Component {
         </Grid>
       )
     })
+
+    const ovelaySpinner = processing ? <Spinner /> : '';
 
     return (
       <main>
@@ -368,61 +415,59 @@ class RecipeCards extends Component {
                 </IconButton>
               </Toolbar>
             </AppBar>
-
             <div className={classes.layout}>
-              <form
-                className={classes.container}
-                noValidate
-                autoComplete="off" >
-                <FormControl className={classes.formControl}>
-                  <TextField
-                    id="title"
-                    label="Title"
-                    className={classes.textField}
-                    value={this.state.name}
-                    onChange={this.handleChange('title')}
-                    margin="normal"
-                    variant="outlined"
-                  />
-
-                  <TextField
-                    id="ingredients"
-                    label="Ingredients"
-                    placeholder="Placeholder"
-                    multiline
-                    rows="4"
-                    className={classes.textField}
-                    value={this.state.name}
-                    onChange={this.handleChange('ingredients')}
-                    margin="normal"
-                    variant="outlined"
-                  />
-
-                  <TextField
-                    id="instructions"
-                    label="Instructions"
-                    placeholder="Placeholder"
-                    multiline
-                    rows="10"
-                    className={classes.textField}
-                    value={this.state.name}
-                    onChange={this.handleChange('instructions')}
-                    margin="normal"
-                    variant="outlined"
-                  />
-
-                  <ImgDrop imageUpdate={this.imageUpdate} />
-
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={this.handleSubmit}
-                    className={classes.button}
-                  >
-                    Save
-                </Button>
-                </FormControl>
-              </form>
+              <div>
+                <form
+                  className={classes.container}
+                  noValidate
+                  autoComplete="off" >
+                  <FormControl className={classes.formControl}>
+                    <TextField
+                      id="title"
+                      label="Title"
+                      className={classes.textField}
+                      value={this.state.name}
+                      onChange={this.handleChange('title')}
+                      margin="normal"
+                      variant="outlined"
+                    />
+                    <TextField
+                      id="ingredients"
+                      label="Ingredients"
+                      placeholder="Placeholder"
+                      multiline
+                      rows="4"
+                      className={classes.textField}
+                      value={this.state.name}
+                      onChange={this.handleChange('ingredients')}
+                      margin="normal"
+                      variant="outlined"
+                    />
+                    <TextField
+                      id="instructions"
+                      label="Instructions"
+                      placeholder="Placeholder"
+                      multiline
+                      rows="10"
+                      className={classes.textField}
+                      value={this.state.name}
+                      onChange={this.handleChange('instructions')}
+                      margin="normal"
+                      variant="outlined"
+                    />
+                    <ImgDrop imageUpdate={this.imageUpdate} />
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={this.handleAddSubmit}
+                      className={classes.button}
+                    >
+                      Add
+                    </Button>
+                  </FormControl>
+                </form>
+                {ovelaySpinner}
+              </div>
             </div>
           </Dialog>
 
@@ -435,7 +480,6 @@ class RecipeCards extends Component {
           >
             <AppBar className={classes.appBar}>
               <Toolbar>
-
                 <Typography
                   variant="h6"
                   color="inherit"
@@ -450,7 +494,6 @@ class RecipeCards extends Component {
                 </IconButton>
               </Toolbar>
             </AppBar>
-
             <form
               className={classes.container}
               noValidate
@@ -489,27 +532,22 @@ class RecipeCards extends Component {
                   margin="normal"
                   variant="outlined"
                 />
-                <TextField
-                  id="outlined-name"
-                  label="Image"
-                  className={classes.textField}
-                  value={hasValue ? selectedRecipe.imgUrl : ''}
-                  onChange={this.handleEditChange('imgUrl')}
-                  margin="normal"
-                  variant="outlined"
+                <ImgDrop
+                  imageUpdate={this.imageUpdate}
+                  oldImg={hasValue ? selectedRecipe.imgUrl : ''}
                 />
                 <Button
                   variant="contained"
                   color="primary"
-                  onClick={this.handleSave}
+                  onClick={this.handleUpdate}
                   className={classes.button}
                 >
-                  Save
+                  Update
                 </Button>
               </FormControl>
             </form>
+            {ovelaySpinner}
           </Dialog>
-
         </div>
 
       </main>

@@ -15,6 +15,14 @@ class ImgDrop extends Component {
         }
     }
 
+    componentDidMount() {
+        const { imgSrc } = this.state
+        const { oldImg } = this.props
+        if (oldImg != null && oldImg != imgSrc) {
+            this.setState({ imgSrc: oldImg })
+        }
+    }
+
     verifyFile = (files) => {
         if (files && files.length > 0) {
             const currentFile = files[0]
@@ -39,19 +47,18 @@ class ImgDrop extends Component {
         }
 
         if (files && files.length > 0) {
-            //console.log(files);
             const isVerified = this.verifyFile(files)
 
+            //if good, show file preview
             if (isVerified) {
                 //imageBase64Data                
-                const currentFile = files[0]
-                //console.log(currentFile)
+                const imgFileUpload = files[0]
                 const myFileReader = new FileReader()
 
-                //wire a listener 
+                //wire a listener to the file preview
                 myFileReader.addEventListener("load", () => {
-                    //call parent function and pass file to set the state in the parent
-                    this.props.imageUpdate(currentFile);
+                    //call parent function imageUpdate() and pass file to set the state in the parent
+                    this.props.imageUpdate(imgFileUpload);
                     //set the state to show preview
                     this.setState({
                         imgSrc: myFileReader.result
@@ -59,7 +66,7 @@ class ImgDrop extends Component {
 
                 }, false)
 
-                myFileReader.readAsDataURL(currentFile)
+                myFileReader.readAsDataURL(imgFileUpload)
             }
         }
 
@@ -67,10 +74,6 @@ class ImgDrop extends Component {
 
     render() {
         const { imgSrc } = this.state
-
-        const { imgFile } = this.props
-
-
 
         return (
             <div>
@@ -87,7 +90,8 @@ class ImgDrop extends Component {
     }
 }
 ImgDrop.propTypes = {
-    imageUpdate: PropTypes.func.isRequired
+    imageUpdate: PropTypes.func.isRequired,
+    oldImg: PropTypes.string
 };
 
 export default ImgDrop
