@@ -1,14 +1,16 @@
+//external imports
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { storage } from '../firebase'
+
+//project imports
 import { loadRecipes, addRecipe, removeRecipe as deleteRecipe, updateRecipe } from '../actions';
 import RecipeDetails from './RecipeDetails';
 import ImgDrop from './ImgDrop';
 import Spinner from './Spinner';
 
-import { storage } from '../firebase'
-
-
+//material UI
 import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 import AppBar from '@material-ui/core/AppBar';
@@ -29,7 +31,6 @@ import Slide from '@material-ui/core/Slide';
 import TextField from '@material-ui/core/TextField';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import CircularProgress from '@material-ui/core/CircularProgress';
 
 const styles = theme => ({
   appBar: {
@@ -66,7 +67,6 @@ const styles = theme => ({
     flexGrow: 1,
   },
   container: {
-    //display: 'flex',
     flexWrap: 'wrap',
     textAlign: 'center'
   },
@@ -77,14 +77,14 @@ const styles = theme => ({
   button: {
     marginTop: theme.spacing.unit * 3,
     marginLeft: theme.spacing.unit,
-    width: 200
+    width: 170,
+    float: 'right'
   },
   formControl: {
     width: 900
     //margin: theme.spacing.unit * 5,
     //minWidth: 300
   },
-
 });
 
 function Transition(props) {
@@ -103,20 +103,6 @@ class RecipeCards extends Component {
 
   componentDidMount() {
     this.props.loadRecipes();
-  }
-
-  initState = () => {
-    const current = this.state;
-    console.log(this.state);
-    this.setState = ({
-      ...current,
-      openDetailDialog: false,
-      openAddDialog: false,
-      openEditDialog: false,
-      selectedRecipe: null,
-      imgFileUpload: null,
-      processing: false
-    })
   }
 
   handleOpenDetailDialog = () => {
@@ -271,7 +257,6 @@ class RecipeCards extends Component {
             const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
             console.log('File available at', downloadURL);
 
-            //let newRecipe = this.state.form;
             selectedRecipe.imgUrl = downloadURL;
 
             await this.props.updateRecipe(id, selectedRecipe);
@@ -301,6 +286,12 @@ class RecipeCards extends Component {
     const { selectedRecipe, processing } = this.state;
 
     const hasValue = (selectedRecipe ? true : false)
+
+    const enableUpdButton = selectedRecipe &&
+      (selectedRecipe.title.length > 0) &&
+      (selectedRecipe.ingredients.length > 0) &&
+      (selectedRecipe.instructions.length > 0) &&
+      (selectedRecipe.imgUrl.length > 0)
 
     const showRecipes = recipes.map(recipe => {
       return (
@@ -340,6 +331,20 @@ class RecipeCards extends Component {
         </Grid>
       )
     })
+
+    const addBtnDisable = (document.getElementById("title") && document.getElementById("title").value) == null ?
+      (<Button
+        disabled
+        variant="contained"
+        color="primary"
+        className={classes.button}
+      >Add </Button>) :
+      (<Button
+        variant="contained"
+        color="primary"
+        onClick={this.handleAddSubmit}
+        className={classes.button}
+      >Add </Button>);
 
     const ovelaySpinner = processing ? <Spinner /> : '';
 
@@ -423,7 +428,7 @@ class RecipeCards extends Component {
                   autoComplete="off" >
                   <FormControl className={classes.formControl}>
                     <TextField
-                      id="title"
+                      id="title_add"
                       label="Title"
                       className={classes.textField}
                       value={this.state.name}
@@ -432,7 +437,7 @@ class RecipeCards extends Component {
                       variant="outlined"
                     />
                     <TextField
-                      id="ingredients"
+                      id="ingredients_add"
                       label="Ingredients"
                       placeholder="Placeholder"
                       multiline
@@ -444,11 +449,11 @@ class RecipeCards extends Component {
                       variant="outlined"
                     />
                     <TextField
-                      id="instructions"
+                      id="instructions_add"
                       label="Instructions"
                       placeholder="Placeholder"
                       multiline
-                      rows="10"
+                      rows="8"
                       className={classes.textField}
                       value={this.state.name}
                       onChange={this.handleChange('instructions')}
@@ -456,14 +461,9 @@ class RecipeCards extends Component {
                       variant="outlined"
                     />
                     <ImgDrop imageUpdate={this.imageUpdate} />
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={this.handleAddSubmit}
-                      className={classes.button}
-                    >
-                      Add
-                    </Button>
+                    <div className="button-div">
+                      {addBtnDisable}
+                    </div>
                   </FormControl>
                 </form>
                 {ovelaySpinner}
@@ -500,7 +500,7 @@ class RecipeCards extends Component {
               autoComplete="off">
               <FormControl className={classes.formControl}>
                 <TextField
-                  id="title"
+                  id="title-upd"
                   label="Title"
                   className={classes.textField}
                   value={hasValue ? selectedRecipe.title : ''}
@@ -509,7 +509,7 @@ class RecipeCards extends Component {
                   variant="outlined"
                 />
                 <TextField
-                  id="ingredients"
+                  id="ingredients-upd"
                   label="Ingredients"
                   placeholder="Placeholder"
                   multiline
@@ -521,11 +521,11 @@ class RecipeCards extends Component {
                   variant="outlined"
                 />
                 <TextField
-                  id="instructions"
+                  id="instructions-upd"
                   label="Instructions"
                   placeholder="Placeholder"
                   multiline
-                  rows="10"
+                  rows="8"
                   className={classes.textField}
                   value={hasValue ? selectedRecipe.instructions : ''}
                   onChange={this.handleEditChange('instructions')}
@@ -536,14 +536,28 @@ class RecipeCards extends Component {
                   imageUpdate={this.imageUpdate}
                   oldImg={hasValue ? selectedRecipe.imgUrl : ''}
                 />
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={this.handleUpdate}
-                  className={classes.button}
-                >
-                  Update
-                </Button>
+                <div className="button-div">
+                  {enableUpdButton ? (
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={this.handleUpdate}
+                      className={classes.button}
+                    >
+                      Update
+                </Button>)
+                    :
+                    (<Button
+                      disabled
+                      variant="contained"
+                      color="primary"
+                      className={classes.button}
+                    >
+                      Update
+                </Button>)}
+                </div>
+
+
               </FormControl>
             </form>
             {ovelaySpinner}

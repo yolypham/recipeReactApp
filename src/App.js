@@ -9,8 +9,6 @@ import './App.css';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-
-
 const SAMPLE_USER = 'yolypham@email.com';
 
 class App extends Component {

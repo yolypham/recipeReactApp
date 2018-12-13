@@ -44,3 +44,7 @@ html {
   opacity: .75;
   z-index: 9999999;
 }
+
+.button-div{
+  width: 100%
+}

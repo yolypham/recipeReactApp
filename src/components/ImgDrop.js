@@ -75,13 +75,22 @@ class ImgDrop extends Component {
     render() {
         const { imgSrc } = this.state
 
+        const dropzoneStyle = {
+            width: "200px",
+            height: "150px",
+            border: "dashed",
+            paddingTop: "20px",
+            marginRight: "30px",
+            marginLeft: "8px"
+        };
+
         return (
             <div>
                 <table>
                     <tbody>
                         <tr>
-                            <td><Dropzone onDrop={this.dropHandler} multiple={false}>Drop or click here to select image</Dropzone></td>
-                            <td>{imgSrc != null ? <img src={imgSrc} width="350px" /> : ''}</td>
+                            <td><Dropzone style={dropzoneStyle} onDrop={this.dropHandler} multiple={false}>Drop or click here to select image</Dropzone></td>
+                            <td>{imgSrc != null ? <img src={imgSrc} width="280px" height="150px" /> : ''}</td>
                         </tr>
                     </tbody>
                 </table>
