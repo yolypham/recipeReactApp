@@ -32,6 +32,8 @@ import TextField from '@material-ui/core/TextField';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
+const noImageFile = 'https://firebasestorage.googleapis.com/v0/b/keto-react-app.appspot.com/o/images%2FnoImage.jpg?alt=media&token=00f0d47e-5f95-4bc4-b5c7-91dd52da1556';
+
 const styles = theme => ({
   appBar: {
     position: 'relative',
@@ -118,7 +120,11 @@ class RecipeCards extends Component {
   };
 
   handleCloseAddDialog = () => {
-    this.setState({ openAddDialog: false });
+    this.setState({
+      openAddDialog: false,
+      form: null,
+      imgFileUpload: null
+    });
   };
 
   handleOpenEditDialog = () => {
@@ -160,6 +166,7 @@ class RecipeCards extends Component {
   }
 
   handleChange = (name) => ({ target: { value } }) => {
+    //console.log(`name is ${name} and value is ${value}`);
     this.setState({
       form: {
         ...this.state.form,
@@ -180,8 +187,6 @@ class RecipeCards extends Component {
     //disable auto submit form
     e.preventDefault();
 
-    //console.log(this.state);
-
     const { user } = this.props;
     const newRecipe = this.state.form;
 
@@ -192,6 +197,7 @@ class RecipeCards extends Component {
       this.setState({ processing: true });
 
       const { imgFileUpload } = this.state;
+
       const uploadTask = storage.ref(`images/${imgFileUpload.name}`).put(imgFileUpload);
 
       uploadTask.on('state_changed',
@@ -283,16 +289,65 @@ class RecipeCards extends Component {
 
   render() {
     const { classes, recipes } = this.props;
-    const { selectedRecipe, processing } = this.state;
+    const { selectedRecipe, form, processing, imgFileUpload } = this.state;
+
+    console.log(this.state.form);
 
     const hasValue = (selectedRecipe ? true : false)
 
+    //Update Button
     const enableUpdButton = selectedRecipe &&
       (selectedRecipe.title.length > 0) &&
       (selectedRecipe.ingredients.length > 0) &&
       (selectedRecipe.instructions.length > 0) &&
-      (selectedRecipe.imgUrl.length > 0)
+      (selectedRecipe.imgUrl.length > 0);
 
+    const updateButton = (enableUpdButton ?
+      (<Button
+        variant="contained"
+        color="primary"
+        onClick={this.handleUpdate}
+        className={classes.button}
+      >
+        Update
+      </Button>)
+      :
+      (<Button
+        disabled
+        variant="contained"
+        color="primary"
+        className={classes.button}
+      >
+        Update
+      </Button>)
+    );
+
+    // Add button
+    const enableAddButton = form &&
+      (form.title != null &&
+        form.ingredients != null &&
+        form.instructions != null &&
+        imgFileUpload != null);
+
+    const addButton = (enableAddButton ?
+      (<Button
+        variant="contained"
+        color="primary"
+        onClick={this.handleAddSubmit}
+        className={classes.button}
+      >Add </Button>) :
+      (<Button
+        disabled
+        variant="contained"
+        color="primary"
+        className={classes.button}
+      >Add </Button>)
+    );
+
+    // Spinner
+    const ovelaySpinner = processing ? <Spinner /> : '';
+
+    // Build recipe thumbnail cards
     const showRecipes = recipes.map(recipe => {
       return (
         <Grid item key={recipe._id} sm={6} md={4} lg={3}>
@@ -331,22 +386,6 @@ class RecipeCards extends Component {
         </Grid>
       )
     })
-
-    const addBtnDisable = (document.getElementById("title") && document.getElementById("title").value) == null ?
-      (<Button
-        disabled
-        variant="contained"
-        color="primary"
-        className={classes.button}
-      >Add </Button>) :
-      (<Button
-        variant="contained"
-        color="primary"
-        onClick={this.handleAddSubmit}
-        className={classes.button}
-      >Add </Button>);
-
-    const ovelaySpinner = processing ? <Spinner /> : '';
 
     return (
       <main>
@@ -462,7 +501,7 @@ class RecipeCards extends Component {
                     />
                     <ImgDrop imageUpdate={this.imageUpdate} />
                     <div className="button-div">
-                      {addBtnDisable}
+                      {addButton}
                     </div>
                   </FormControl>
                 </form>
@@ -537,26 +576,8 @@ class RecipeCards extends Component {
                   oldImg={hasValue ? selectedRecipe.imgUrl : ''}
                 />
                 <div className="button-div">
-                  {enableUpdButton ? (
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={this.handleUpdate}
-                      className={classes.button}
-                    >
-                      Update
-                </Button>)
-                    :
-                    (<Button
-                      disabled
-                      variant="contained"
-                      color="primary"
-                      className={classes.button}
-                    >
-                      Update
-                </Button>)}
+                  {updateButton}
                 </div>
-
 
               </FormControl>
             </form>
