@@ -48,6 +48,7 @@ const styles = theme => ({
       marginLeft: 'auto',
       marginRight: 'auto',
     },
+    padding: `${theme.spacing.unit * 3}px 0 0 0`
   },
   fab: {
     margin: theme.spacing.unit,
@@ -58,7 +59,8 @@ const styles = theme => ({
     }
   },
   cardGrid: {
-    padding: `${theme.spacing.unit * 4}px 0 0 0`,
+    backgroundColor: '#ffffff',
+    padding: '10px'
   },
   card: {
     height: '100%',
@@ -74,7 +76,9 @@ const styles = theme => ({
   },
   container: {
     flexWrap: 'wrap',
-    textAlign: 'center'
+    textAlign: 'center',
+    backgroundColor: '#FBE9E7',
+    height: '100%'
   },
   textField: {
     marginLeft: theme.spacing.unit,
@@ -92,9 +96,10 @@ const styles = theme => ({
     }
   },
   formControl: {
-    width: 900
-    //margin: theme.spacing.unit * 5,
-    //minWidth: 300
+    width: 900,
+    backgroundColor: '#ffffff',
+    margin: theme.spacing.unit * 2,
+    padding: '20px'
   },
 });
 
@@ -393,7 +398,7 @@ class RecipeCards extends Component {
 
     return (
       <main>
-        <div className={classNames(classes.layout, classes.cardGrid)}>
+        <div className={classes.layout}>
           <div className="add-icon">
             Add Recipe
             <Fab
@@ -404,192 +409,192 @@ class RecipeCards extends Component {
             </Fab>
           </div>
 
-          <Grid container spacing={8}>
+          <Grid
+            container
+            spacing={8}>
             {showRecipes}
           </Grid>
-
-          {/* Dialog for Details */}
-          <Dialog
-            fullScreen
-            open={this.state.openDetailDialog}
-            onClose={this.handleCloseDetailDialog}
-            TransitionComponent={Transition}
-          >
-            <AppBar className={classes.appBar}>
-              <Toolbar>
-                <Typography
-                  variant="h6"
-                  color="inherit"
-                  className={classes.flex}>
-                  Recipe Details
-              </Typography>
-                <IconButton
-                  color="inherit"
-                  onClick={this.handleCloseDetailDialog}
-                  aria-label="Close">
-                  <CloseIcon />
-                </IconButton>
-              </Toolbar>
-            </AppBar>
-            <div className="modal-dialog">
-              <Typography
-                gutterBottom
-                variant="h5"
-                component="h2">
-                <RecipeDetails recipe={selectedRecipe} />
-              </Typography>
-            </div>
-          </Dialog>
-
-
-          {/* Dialog for Add Recipe */}
-          <Dialog
-            fullScreen
-            open={this.state.openAddDialog}
-            onClose={this.handleCloseAddDialog}
-            TransitionComponent={Transition}
-          >
-            <AppBar className={classes.appBar}>
-              <Toolbar>
-                <Typography
-                  variant="h6"
-                  color="inherit"
-                  className={classes.flex}>
-                  Add New Recipe
-              </Typography>
-                <IconButton
-                  color="inherit"
-                  onClick={this.handleCloseAddDialog}
-                  aria-label="Close">
-                  <CloseIcon />
-                </IconButton>
-              </Toolbar>
-            </AppBar>
-            <div className={classes.layout}>
-              <div>
-                <form
-                  className={classes.container}
-                  noValidate
-                  autoComplete="off" >
-                  <FormControl className={classes.formControl}>
-                    <TextField
-                      id="title_add"
-                      label="Title"
-                      className={classes.textField}
-                      value={this.state.name}
-                      onChange={this.handleChange('title')}
-                      margin="normal"
-                      variant="outlined"
-                    />
-                    <TextField
-                      id="ingredients_add"
-                      label="Ingredients"
-                      placeholder="Placeholder"
-                      multiline
-                      rows="4"
-                      className={classes.textField}
-                      value={this.state.name}
-                      onChange={this.handleChange('ingredients')}
-                      margin="normal"
-                      variant="outlined"
-                    />
-                    <TextField
-                      id="instructions_add"
-                      label="Instructions"
-                      placeholder="Placeholder"
-                      multiline
-                      rows="8"
-                      className={classes.textField}
-                      value={this.state.name}
-                      onChange={this.handleChange('instructions')}
-                      margin="normal"
-                      variant="outlined"
-                    />
-                    <ImgDrop imageUpdate={this.imageUpdate} />
-                    <div className="button-div">
-                      {addButton}
-                    </div>
-                  </FormControl>
-                </form>
-                {ovelaySpinner}
-              </div>
-            </div>
-          </Dialog>
-
-          {/* Dialog for Update Recipe */}
-          <Dialog
-            fullScreen
-            open={this.state.openEditDialog}
-            onClose={this.handleCloseEditDialog}
-            TransitionComponent={Transition}
-          >
-            <AppBar className={classes.appBar}>
-              <Toolbar>
-                <Typography
-                  variant="h6"
-                  color="inherit"
-                  className={classes.flex}>
-                  Edit Recipe
-              </Typography>
-                <IconButton
-                  color="inherit"
-                  onClick={this.handleCloseEditDialog}
-                  aria-label="Close">
-                  <CloseIcon />
-                </IconButton>
-              </Toolbar>
-            </AppBar>
-            <form
-              className={classes.container}
-              noValidate
-              autoComplete="off">
-              <FormControl className={classes.formControl}>
-                <TextField
-                  id="title-upd"
-                  label="Title"
-                  className={classes.textField}
-                  value={hasValue ? selectedRecipe.title : ''}
-                  onChange={this.handleEditChange('title')}
-                  margin="normal"
-                  variant="outlined"
-                />
-                <TextField
-                  id="ingredients-upd"
-                  label="Ingredients"
-                  placeholder="Placeholder"
-                  multiline
-                  rows="4"
-                  className={classes.textField}
-                  value={hasValue ? selectedRecipe.ingredients : ''}
-                  onChange={this.handleEditChange('ingredients')}
-                  margin="normal"
-                  variant="outlined"
-                />
-                <TextField
-                  id="instructions-upd"
-                  label="Instructions"
-                  placeholder="Placeholder"
-                  multiline
-                  rows="8"
-                  className={classes.textField}
-                  value={hasValue ? selectedRecipe.instructions : ''}
-                  onChange={this.handleEditChange('instructions')}
-                  margin="normal"
-                  variant="outlined"
-                />
-                <ImgDrop
-                  imageUpdate={this.imageUpdate}
-                  oldImg={hasValue ? selectedRecipe.imgUrl : ''}
-                />
-                <div className="button-div">
-                  {updateButton}
-                </div>
-
-              </FormControl>
-            </form>
-            {ovelaySpinner}
-          </Dialog>
         </div>
+
+        {/* Dialog for Details */}
+        <Dialog
+          fullScreen
+          open={this.state.openDetailDialog}
+          onClose={this.handleCloseDetailDialog}
+          TransitionComponent={Transition}
+        >
+          <AppBar className={classes.appBar}>
+            <Toolbar>
+              <Typography
+                variant="h6"
+                color="inherit"
+                className={classes.flex}>
+                Recipe Details
+              </Typography>
+              <IconButton
+                color="inherit"
+                onClick={this.handleCloseDetailDialog}
+                aria-label="Close">
+                <CloseIcon />
+              </IconButton>
+            </Toolbar>
+          </AppBar>
+
+          {/* <Typography
+              gutterBottom
+              variant="h5"
+              component="h2"> */}
+          <RecipeDetails recipe={selectedRecipe} />
+          {/* </Typography> */}
+
+        </Dialog>
+
+
+        {/* Dialog for Add Recipe */}
+        <Dialog
+          fullScreen
+          open={this.state.openAddDialog}
+          onClose={this.handleCloseAddDialog}
+          TransitionComponent={Transition}
+        >
+          <AppBar className={classes.appBar}>
+            <Toolbar>
+              <Typography
+                variant="h6"
+                color="inherit"
+                className={classes.flex}>
+                Add New Recipe
+              </Typography>
+              <IconButton
+                color="inherit"
+                onClick={this.handleCloseAddDialog}
+                aria-label="Close">
+                <CloseIcon />
+              </IconButton>
+            </Toolbar>
+          </AppBar>
+
+          <form
+            className={classes.container}
+            noValidate
+            autoComplete="off" >
+            <FormControl className={classes.formControl}>
+              <TextField
+                id="title_add"
+                label="Title"
+                className={classes.textField}
+                value={this.state.name}
+                onChange={this.handleChange('title')}
+                margin="normal"
+                variant="outlined"
+              />
+              <TextField
+                id="ingredients_add"
+                label="Ingredients"
+                placeholder="Placeholder"
+                multiline
+                rows="4"
+                className={classes.textField}
+                value={this.state.name}
+                onChange={this.handleChange('ingredients')}
+                margin="normal"
+                variant="outlined"
+              />
+              <TextField
+                id="instructions_add"
+                label="Instructions"
+                placeholder="Placeholder"
+                multiline
+                rows="8"
+                className={classes.textField}
+                value={this.state.name}
+                onChange={this.handleChange('instructions')}
+                margin="normal"
+                variant="outlined"
+              />
+              <ImgDrop imageUpdate={this.imageUpdate} />
+              <div className="button-div">
+                {addButton}
+              </div>
+            </FormControl>
+          </form>
+          {ovelaySpinner}
+        </Dialog>
+
+        {/* Dialog for Update Recipe */}
+        <Dialog
+          fullScreen
+          open={this.state.openEditDialog}
+          onClose={this.handleCloseEditDialog}
+          TransitionComponent={Transition}
+        >
+          <AppBar className={classes.appBar}>
+            <Toolbar>
+              <Typography
+                variant="h6"
+                color="inherit"
+                className={classes.flex}>
+                Edit Recipe
+              </Typography>
+              <IconButton
+                color="inherit"
+                onClick={this.handleCloseEditDialog}
+                aria-label="Close">
+                <CloseIcon />
+              </IconButton>
+            </Toolbar>
+          </AppBar>
+          <form
+            className={classes.container}
+            noValidate
+            autoComplete="off">
+            <FormControl className={classes.formControl}>
+              <TextField
+                id="title-upd"
+                label="Title"
+                className={classes.textField}
+                value={hasValue ? selectedRecipe.title : ''}
+                onChange={this.handleEditChange('title')}
+                margin="normal"
+                variant="outlined"
+              />
+              <TextField
+                id="ingredients-upd"
+                label="Ingredients"
+                placeholder="Placeholder"
+                multiline
+                rows="4"
+                className={classes.textField}
+                value={hasValue ? selectedRecipe.ingredients : ''}
+                onChange={this.handleEditChange('ingredients')}
+                margin="normal"
+                variant="outlined"
+              />
+              <TextField
+                id="instructions-upd"
+                label="Instructions"
+                placeholder="Placeholder"
+                multiline
+                rows="8"
+                className={classes.textField}
+                value={hasValue ? selectedRecipe.instructions : ''}
+                onChange={this.handleEditChange('instructions')}
+                margin="normal"
+                variant="outlined"
+              />
+              <ImgDrop
+                imageUpdate={this.imageUpdate}
+                oldImg={hasValue ? selectedRecipe.imgUrl : ''}
+              />
+              <div className="button-div">
+                {updateButton}
+              </div>
+
+            </FormControl>
+          </form>
+          {ovelaySpinner}
+        </Dialog>
+        {/* </div> */}
 
       </main>
     )
