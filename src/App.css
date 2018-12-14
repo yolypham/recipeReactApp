@@ -1,5 +1,4 @@
 
-
 * {
   margin: 0;
   padding: 0;
@@ -7,12 +6,19 @@
 }
 
 html {
-  background-color: #fff;
   font-family: 'Lato', 'Arial', sans-serif;
   font-size: 14px;
   font-weight: 300;
   color: #555;
   text-rendering: optimizeLegibility; /*makes fonts render nicely*/
+}
+
+body {
+  background-color: #FBE9E7;
+}
+
+.modal-dialog {
+  background-color: #FBE9E7;
 }
 
 .recipe-hr{
@@ -28,6 +34,9 @@ html {
 .add-icon{
   float: right;
   margin: 0px 5px 10px 0px;
+  font-size: 24px;
+  color: #000000;
+  font-weight: 700;
 }
 
 .recipe-img{
@@ -47,4 +56,8 @@ html {
 
 .button-div{
   width: 100%
+}
+
+.classes.fab:hover{
+  background-color: aquamarine
 }

@@ -32,8 +32,6 @@ import TextField from '@material-ui/core/TextField';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
-const noImageFile = 'https://firebasestorage.googleapis.com/v0/b/keto-react-app.appspot.com/o/images%2FnoImage.jpg?alt=media&token=00f0d47e-5f95-4bc4-b5c7-91dd52da1556';
-
 const styles = theme => ({
   appBar: {
     position: 'relative',
@@ -53,6 +51,11 @@ const styles = theme => ({
   },
   fab: {
     margin: theme.spacing.unit,
+    backgroundColor: '#FF5722',
+    color: '#ffffff',
+    "&:hover": {
+      backgroundColor: '#D84315'
+    }
   },
   cardGrid: {
     padding: `${theme.spacing.unit * 4}px 0 0 0`,
@@ -67,6 +70,7 @@ const styles = theme => ({
   },
   cardContent: {
     flexGrow: 1,
+    backgroundColor: '#b3e5fc'
   },
   container: {
     flexWrap: 'wrap',
@@ -80,7 +84,12 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 3,
     marginLeft: theme.spacing.unit,
     width: 170,
-    float: 'right'
+    float: 'right',
+    backgroundColor: '#FF5722',
+    color: '#ffffff',
+    "&:hover": {
+      backgroundColor: '#D84315'
+    }
   },
   formControl: {
     width: 900
@@ -305,7 +314,6 @@ class RecipeCards extends Component {
     const updateButton = (enableUpdButton ?
       (<Button
         variant="contained"
-        color="primary"
         onClick={this.handleUpdate}
         className={classes.button}
       >
@@ -315,7 +323,6 @@ class RecipeCards extends Component {
       (<Button
         disabled
         variant="contained"
-        color="primary"
         className={classes.button}
       >
         Update
@@ -332,14 +339,12 @@ class RecipeCards extends Component {
     const addButton = (enableAddButton ?
       (<Button
         variant="contained"
-        color="primary"
         onClick={this.handleAddSubmit}
         className={classes.button}
       >Add </Button>) :
       (<Button
         disabled
         variant="contained"
-        color="primary"
         className={classes.button}
       >Add </Button>)
     );
@@ -361,14 +366,13 @@ class RecipeCards extends Component {
             <CardContent className={classes.cardContent}>
               <Typography
                 gutterBottom
-                variant="h6">
+                variant="h6"
+                color="textPrimary">
                 {recipe.title}
               </Typography>
 
               <div className="action-icons">
                 <Fab
-                  style={{ backgroundColor: 'green', color: 'white' }}
-                  color="secondary"
                   aria-label="Edit"
                   size="small"
                   className={classes.fab}>
@@ -393,7 +397,6 @@ class RecipeCards extends Component {
           <div className="add-icon">
             Add Recipe
             <Fab
-              color="primary"
               aria-label="Add"
               size="small"
               className={classes.fab}>
@@ -428,13 +431,16 @@ class RecipeCards extends Component {
                 </IconButton>
               </Toolbar>
             </AppBar>
-            <Typography
-              gutterBottom
-              variant="h5"
-              component="h2">
-              <RecipeDetails recipe={selectedRecipe} />
-            </Typography>
+            <div className="modal-dialog">
+              <Typography
+                gutterBottom
+                variant="h5"
+                component="h2">
+                <RecipeDetails recipe={selectedRecipe} />
+              </Typography>
+            </div>
           </Dialog>
+
 
           {/* Dialog for Add Recipe */}
           <Dialog

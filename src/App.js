@@ -7,7 +7,27 @@ import Footer from './components/layout/footer';
 import RecipeCards from './components/RecipeCards';
 import './App.css';
 
-import CssBaseline from '@material-ui/core/CssBaseline';
+import { createMuiTheme } from '@material-ui/core/styles';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      light: '#e6ffff',
+      main: '#004ba0',
+      dark: '#006db3',
+      contrastText: '#ffffff',
+    },
+    secondary: {
+      light: '#7b5e57',
+      main: '#4e342e',
+      dark: '#260e04',
+      contrastText: '#000000'
+    }
+    // error: will use the default color
+  },
+});
 
 const SAMPLE_USER = 'yolypham@email.com';
 
@@ -20,13 +40,15 @@ class App extends Component {
     const { user } = this.props;
 
     return (
-      <React.Fragment>
-        <CssBaseline />
-        <Header user={user} />
-        <RecipeCards user={user} />
-        <Footer />
 
-      </React.Fragment>
+      <MuiThemeProvider theme={theme}>
+        <div>
+          <Header user={user} />
+          <RecipeCards user={user} />
+          <Footer />
+        </div>
+      </MuiThemeProvider>
+
     );
   }
 }

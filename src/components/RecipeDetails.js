@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
     layout: {
+
         width: 'auto',
         marginLeft: theme.spacing.unit * 3,
         marginRight: theme.spacing.unit * 3,
@@ -16,6 +17,7 @@ const styles = theme => ({
             marginLeft: 'auto',
             marginRight: 'auto',
         },
+        padding: '0 20px 20px 20px'
     },
     input: {
         //margin: theme.spacing.unit
