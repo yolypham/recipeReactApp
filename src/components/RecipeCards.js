@@ -58,6 +58,11 @@ const styles = theme => ({
       backgroundColor: '#D84315'
     }
   },
+  gridItem: {
+    minWidth: '270px',
+    maxWidth: '300px',
+    width: '300px'
+  },
   cardGrid: {
     backgroundColor: '#ffffff',
     padding: '10px'
@@ -72,13 +77,20 @@ const styles = theme => ({
   },
   cardContent: {
     flexGrow: 1,
-    backgroundColor: '#b3e5fc'
+    backgroundColor: '#b3e5fc',
+    padding: '5px',
+    "&:last-child": {
+      paddingBottom: '5px'
+    }
   },
   container: {
     flexWrap: 'wrap',
     textAlign: 'center',
     backgroundColor: '#FBE9E7',
     height: '100%'
+  },
+  typography: {
+    height: '55px'
   },
   textField: {
     marginLeft: theme.spacing.unit,
@@ -99,7 +111,11 @@ const styles = theme => ({
     width: 900,
     backgroundColor: '#ffffff',
     margin: theme.spacing.unit * 2,
-    padding: '20px'
+    padding: '20px',
+    borderRadius: '1%',
+    [theme.breakpoints.down('sm')]: {
+      width: '370px',
+    },
   },
 });
 
@@ -360,17 +376,18 @@ class RecipeCards extends Component {
     // Build recipe thumbnail cards
     const showRecipes = recipes.map(recipe => {
       return (
-        <Grid item key={recipe._id} sm={6} md={4} lg={3}>
+        <Grid item key={recipe._id} sm={6} md={4} lg={3}
+          className={classes.gridItem}>
           <Card className={classes.card}>
             <CardMedia
               className={classes.cardMedia}
               image={recipe.imgUrl}
-              title={recipe.title}
               onClick={() => this.clickRecipeHandler(recipe)}
             />
             <CardContent className={classes.cardContent}>
               <Typography
-                gutterBottom
+                className={classes.typography}
+                align="center"
                 variant="h6"
                 color="textPrimary">
                 {recipe.title}
@@ -411,7 +428,9 @@ class RecipeCards extends Component {
 
           <Grid
             container
-            spacing={8}>
+            spacing={8}
+            alignContent={'center'}
+          >
             {showRecipes}
           </Grid>
         </div>
@@ -440,12 +459,9 @@ class RecipeCards extends Component {
             </Toolbar>
           </AppBar>
 
-          {/* <Typography
-              gutterBottom
-              variant="h5"
-              component="h2"> */}
-          <RecipeDetails recipe={selectedRecipe} />
-          {/* </Typography> */}
+          <div className="modal-dialog">
+            <RecipeDetails recipe={selectedRecipe} />
+          </div>
 
         </Dialog>
 
@@ -474,51 +490,55 @@ class RecipeCards extends Component {
             </Toolbar>
           </AppBar>
 
-          <form
-            className={classes.container}
-            noValidate
-            autoComplete="off" >
-            <FormControl className={classes.formControl}>
-              <TextField
-                id="title_add"
-                label="Title"
-                className={classes.textField}
-                value={this.state.name}
-                onChange={this.handleChange('title')}
-                margin="normal"
-                variant="outlined"
-              />
-              <TextField
-                id="ingredients_add"
-                label="Ingredients"
-                placeholder="Placeholder"
-                multiline
-                rows="4"
-                className={classes.textField}
-                value={this.state.name}
-                onChange={this.handleChange('ingredients')}
-                margin="normal"
-                variant="outlined"
-              />
-              <TextField
-                id="instructions_add"
-                label="Instructions"
-                placeholder="Placeholder"
-                multiline
-                rows="8"
-                className={classes.textField}
-                value={this.state.name}
-                onChange={this.handleChange('instructions')}
-                margin="normal"
-                variant="outlined"
-              />
-              <ImgDrop imageUpdate={this.imageUpdate} />
-              <div className="button-div">
-                {addButton}
-              </div>
-            </FormControl>
-          </form>
-          {ovelaySpinner}
+          <div className="modal-dialog">
+            <form
+              className={classes.container}
+              noValidate
+              autoComplete="off" >
+
+              <FormControl className={classes.formControl}>
+                <TextField
+                  id="title_add"
+                  label="Title"
+                  className={classes.textField}
+                  value={this.state.name}
+                  onChange={this.handleChange('title')}
+                  margin="normal"
+                  variant="outlined"
+                />
+                <TextField
+                  id="ingredients_add"
+                  label="Ingredients"
+                  placeholder="Placeholder"
+                  multiline
+                  rows="4"
+                  className={classes.textField}
+                  value={this.state.name}
+                  onChange={this.handleChange('ingredients')}
+                  margin="normal"
+                  variant="outlined"
+                />
+                <TextField
+                  id="instructions_add"
+                  label="Instructions"
+                  placeholder="Placeholder"
+                  multiline
+                  rows="8"
+                  className={classes.textField}
+                  value={this.state.name}
+                  onChange={this.handleChange('instructions')}
+                  margin="normal"
+                  variant="outlined"
+                />
+                <ImgDrop imageUpdate={this.imageUpdate} />
+                <div className="button-div">
+                  {addButton}
+                </div>
+              </FormControl>
+
+            </form>
+            {ovelaySpinner}
+          </div>
         </Dialog>
 
         {/* Dialog for Update Recipe */}
@@ -544,57 +564,59 @@ class RecipeCards extends Component {
               </IconButton>
             </Toolbar>
           </AppBar>
-          <form
-            className={classes.container}
-            noValidate
-            autoComplete="off">
-            <FormControl className={classes.formControl}>
-              <TextField
-                id="title-upd"
-                label="Title"
-                className={classes.textField}
-                value={hasValue ? selectedRecipe.title : ''}
-                onChange={this.handleEditChange('title')}
-                margin="normal"
-                variant="outlined"
-              />
-              <TextField
-                id="ingredients-upd"
-                label="Ingredients"
-                placeholder="Placeholder"
-                multiline
-                rows="4"
-                className={classes.textField}
-                value={hasValue ? selectedRecipe.ingredients : ''}
-                onChange={this.handleEditChange('ingredients')}
-                margin="normal"
-                variant="outlined"
-              />
-              <TextField
-                id="instructions-upd"
-                label="Instructions"
-                placeholder="Placeholder"
-                multiline
-                rows="8"
-                className={classes.textField}
-                value={hasValue ? selectedRecipe.instructions : ''}
-                onChange={this.handleEditChange('instructions')}
-                margin="normal"
-                variant="outlined"
-              />
-              <ImgDrop
-                imageUpdate={this.imageUpdate}
-                oldImg={hasValue ? selectedRecipe.imgUrl : ''}
-              />
-              <div className="button-div">
-                {updateButton}
-              </div>
 
-            </FormControl>
-          </form>
-          {ovelaySpinner}
+          <div className="modal-dialog">
+            <form
+              className={classes.container}
+              noValidate
+              autoComplete="off">
+              <FormControl className={classes.formControl}>
+                <TextField
+                  id="title-upd"
+                  label="Title"
+                  className={classes.textField}
+                  value={hasValue ? selectedRecipe.title : ''}
+                  onChange={this.handleEditChange('title')}
+                  margin="normal"
+                  variant="outlined"
+                />
+                <TextField
+                  id="ingredients-upd"
+                  label="Ingredients"
+                  placeholder="Placeholder"
+                  multiline
+                  rows="4"
+                  className={classes.textField}
+                  value={hasValue ? selectedRecipe.ingredients : ''}
+                  onChange={this.handleEditChange('ingredients')}
+                  margin="normal"
+                  variant="outlined"
+                />
+                <TextField
+                  id="instructions-upd"
+                  label="Instructions"
+                  placeholder="Placeholder"
+                  multiline
+                  rows="8"
+                  className={classes.textField}
+                  value={hasValue ? selectedRecipe.instructions : ''}
+                  onChange={this.handleEditChange('instructions')}
+                  margin="normal"
+                  variant="outlined"
+                />
+                <ImgDrop
+                  imageUpdate={this.imageUpdate}
+                  oldImg={hasValue ? selectedRecipe.imgUrl : ''}
+                />
+                <div className="button-div">
+                  {updateButton}
+                </div>
+
+              </FormControl>
+            </form>
+            {ovelaySpinner}
+          </div>
         </Dialog>
-        {/* </div> */}
 
       </main>
     )

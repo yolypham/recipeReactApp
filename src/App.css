@@ -19,6 +19,7 @@ body {
 
 .modal-dialog {
   background-color: #FBE9E7;
+  height: 100%;
 }
 
 .details {
@@ -26,7 +27,8 @@ body {
     background-color: #ffffff;
     padding: 0px 20px 20px 20px;
     margin: 20px auto;
-    width: 75%;  
+    width: 75%; 
+    border-radius: 1%
 }
 
 .recipe-hr{
@@ -48,9 +50,27 @@ body {
 }
 
 .recipe-img{
-  max-width: 500px;
+  max-width: 100%;
 }
 
+.button-div{
+  width: 100%
+}
+
+.imgDropZone 
+{
+display: inline-flex;
+padding-right: 20px;
+}
+
+@media screen and (max-width: 960px) {
+  .imgDropZone  {
+    display: block;
+    padding: 10px 0px;
+  }
+}
+
+/* Spinner */
 .overlay{
   position: fixed;
   top: 0;
@@ -60,12 +80,4 @@ body {
   background-color: #e1ebef;
   opacity: .75;
   z-index: 9999999;
-}
-
-.button-div{
-  width: 100%
-}
-
-.classes.fab:hover{
-  background-color: aquamarine
 }

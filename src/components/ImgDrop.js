@@ -85,15 +85,22 @@ class ImgDrop extends Component {
         };
 
         return (
-            <div>
-                <table>
+            <div className="imgDropZone">
+                <div>
+                    <Dropzone style={dropzoneStyle} onDrop={this.dropHandler} multiple={false}>Drop or click here to select image</Dropzone>
+                </div>
+                <br />
+                <div>
+                    {imgSrc != null ? <img src={imgSrc} width="280px" height="150px" /> : ''}
+                </div>
+                {/* <table>
                     <tbody>
                         <tr>
                             <td><Dropzone style={dropzoneStyle} onDrop={this.dropHandler} multiple={false}>Drop or click here to select image</Dropzone></td>
                             <td>{imgSrc != null ? <img src={imgSrc} width="280px" height="150px" /> : ''}</td>
                         </tr>
                     </tbody>
-                </table>
+                </table> */}
             </div>
         )
     }

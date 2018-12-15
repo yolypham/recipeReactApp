@@ -3,14 +3,15 @@ import PropTypes from 'prop-types';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Input from '@material-ui/core/Input';
+import InputBase from '@material-ui/core/InputBase';
 import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
     container: {
         flexWrap: 'wrap',
-        backgroundColor: '#FBE9E7',
-        height: '100%'
+        backgroundColor: '#b3e5fc',
+        height: '100%',
+        padding: '5px'
     },
 })
 
@@ -30,21 +31,19 @@ class RecipeDetails extends Component {
                         {recipe.title}
                     </Typography>
 
-                    <Grid container spacing={24}>
+                    <Grid container spacing={24} className="modal-dialog">
                         <Grid item xs={6}>
                             <Typography variant="h6"
                                 color="textPrimary"
                                 gutterBottom >
                                 Ingredients
                             </Typography>
-                            <Input
-                                readOnly="true"
+                            <InputBase
+                                readOnly={true}
                                 multiline
                                 rowsMax="20"
-                                fullWidth="true"
-                                disableUnderline="true"
+                                fullWidth={true}
                                 defaultValue={recipe.ingredients}
-                                className={classes.input}
                             />
 
                         </Grid>
@@ -58,14 +57,12 @@ class RecipeDetails extends Component {
                                 gutterBottom >
                                 Instructions
                             </Typography>
-                            <Input
-                                readOnly="true"
+                            <InputBase
+                                readOnly={true}
                                 multiline
                                 rowsMax="30"
-                                fullWidth="true"
-                                disableUnderline="true"
+                                fullWidth={true}
                                 defaultValue={recipe.instructions}
-                                className={classes.input}
                             />
                         </Grid>
 
@@ -75,12 +72,12 @@ class RecipeDetails extends Component {
                                 gutterBottom >
                                 Image
                             </Typography>
-                            <Input
-                                readOnly="true"
-                                fullWidth="true"
-                                disableUnderline="true"
+                            <InputBase
+                                readOnly={true}
+                                fullWidth={true}
+                                multiline
+                                rowsMax="3"
                                 defaultValue={recipe.imgUrl}
-                                className={classes.input}
                             />
                         </Grid>
 
