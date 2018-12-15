@@ -39,6 +39,7 @@ class RecipeDetails extends Component {
                                 Ingredients
                             </Typography>
                             <InputBase
+                                style={{ color: '#263238' }}
                                 readOnly={true}
                                 multiline
                                 rowsMax="20"
@@ -58,6 +59,7 @@ class RecipeDetails extends Component {
                                 Instructions
                             </Typography>
                             <InputBase
+                                style={{ color: '#263238' }}
                                 readOnly={true}
                                 multiline
                                 rowsMax="30"
@@ -73,6 +75,7 @@ class RecipeDetails extends Component {
                                 Image
                             </Typography>
                             <InputBase
+                                style={{ color: '#263238' }}
                                 readOnly={true}
                                 fullWidth={true}
                                 multiline

@@ -87,7 +87,8 @@ const styles = theme => ({
   container: {
     flexWrap: 'wrap',
     textAlign: 'center',
-    backgroundColor: '#FBE9E7',
+    // backgroundColor: '#FBE9E7',
+    backgroundColor: '#b3e5fc',
     height: '100%'
   },
   typography: {
