@@ -42,7 +42,6 @@ class ImgDrop extends Component {
 
     dropHandler = (files, rejectedFiles) => {
         if (rejectedFiles && rejectedFiles.length > 0) {
-            //console.log(rejectedFiles)
             this.verifyFile(rejectedFiles)
         }
 

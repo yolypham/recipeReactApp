@@ -52,8 +52,7 @@ export const addRecipe = (json) => async (dispatch) => {
 
 // DELETE_RECIPE
 export const removeRecipe = (id) => async () => {
-    console.log('reach action delete');
-    const recipe = await deleteRecipe(id);
+    await deleteRecipe(id);
 };
 
 // PUT_RECIPE

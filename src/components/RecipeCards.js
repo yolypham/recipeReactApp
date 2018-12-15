@@ -43,12 +43,13 @@ const styles = theme => ({
     width: 'auto',
     marginLeft: theme.spacing.unit * 3,
     marginRight: theme.spacing.unit * 3,
+    marginTop: theme.spacing.unit * 6,
+    padding: `${theme.spacing.unit * 3}px 0 0 0`,
     [theme.breakpoints.up(1100 + theme.spacing.unit * 3 * 2)]: {
       width: 1100,
       marginLeft: 'auto',
       marginRight: 'auto',
     },
-    padding: `${theme.spacing.unit * 3}px 0 0 0`
   },
   fab: {
     margin: theme.spacing.unit,
@@ -320,8 +321,6 @@ class RecipeCards extends Component {
   render() {
     const { classes, recipes } = this.props;
     const { selectedRecipe, form, processing, imgFileUpload } = this.state;
-
-    console.log(this.state.form);
 
     const hasValue = (selectedRecipe ? true : false)
 
