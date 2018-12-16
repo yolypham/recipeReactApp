@@ -126,6 +126,10 @@ function Transition(props) {
 }
 
 class RecipeCards extends Component {
+  constructor(props) {
+    super(props)
+  }
+
   state = {
     openDetailDialog: false,
     openAddDialog: false,

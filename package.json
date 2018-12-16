@@ -32,7 +32,8 @@
     "server": "nodemon ./index.js --ignore src/",
     "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run build\"",
     "build": "webpack-dev-server --mode development",
-    "build:prod": "webpack src/index.js dist/bundle.js -mode-p"
+    "build:prod": "webpack src/index.js dist/bundle.js -mode-p",
+    "heroku-postbuild": "cd src && npm install --only=dev && npm install && npm run build"
   },
   "proxy": "http://localhost:3001",
   "eslintConfig": {

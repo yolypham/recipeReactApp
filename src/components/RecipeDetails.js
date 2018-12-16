@@ -16,6 +16,10 @@ const styles = theme => ({
 })
 
 class RecipeDetails extends Component {
+    constructor(props) {
+        super(props)
+    }
+
     render() {
         const { classes, recipe } = this.props;
 
