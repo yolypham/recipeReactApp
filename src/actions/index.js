@@ -11,6 +11,7 @@ export const loadUserActionType = payload => ({
 
 export const loadUser = (userid) => async (dispatch) => {
     const user = await getUser(userid);
+    console.log(user, 'in actions')
     dispatch(loadUserActionType(user.data));
 };
 
