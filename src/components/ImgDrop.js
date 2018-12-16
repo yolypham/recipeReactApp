@@ -18,7 +18,7 @@ class ImgDrop extends Component {
     componentDidMount() {
         const { imgSrc } = this.state
         const { oldImg } = this.props
-        if (oldImg != null && oldImg != imgSrc) {
+        if (oldImg !== null && oldImg !== imgSrc) {
             this.setState({ imgSrc: oldImg })
         }
     }

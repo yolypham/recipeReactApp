@@ -12,7 +12,7 @@ import Spinner from './Spinner';
 
 //material UI
 import { withStyles } from '@material-ui/core/styles';
-import classNames from 'classnames';
+//import classNames from 'classnames';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
@@ -126,9 +126,9 @@ function Transition(props) {
 }
 
 class RecipeCards extends Component {
-  constructor(props) {
-    super(props)
-  }
+  // constructor(props) {
+  //   super(props)
+  // }
 
   state = {
     openDetailDialog: false,
