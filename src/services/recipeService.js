@@ -6,7 +6,7 @@ const URL = 'http://localhost:3001/recipes/';
 //GET RECIPES
 export const getRecipes = async () => {
     try {
-        const res = await axios.get(URL);
+        const res = await axios.get('/recipes');
         return res.data;
     } catch (error) {
         console.log(error);
