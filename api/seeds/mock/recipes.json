@@ -27,7 +27,7 @@
         "title": "Baba Ganush",
         "ingredients": "1 eggplant\n1/4 cup tahini\n2 cloves garlic\n1/4 cup lemon juice\n1/2 tsp cumin\n1/4 tsp sea salt\n\nOptional Garnish:\n1 tsp olive oil\npinch of paprika\nparsley",
         "instructions": "Preheat your oven to 400F/205C. Take your eggplant and cut it in half, then place on a parchment lined baking sheet. Prick holes through the skin of the eggplant with a fork.  Once the oven is up to temp, go ahead and pop the eggplant in for approx. 30 minutes.  Once cooked, let the eggplant cool for a few minutes until you can handle it comfortably, and peel off the skin.  The skin should come off really easily at this point.\nCombine the cooked eggplant flesh and the remainder of ingredients into a blender, and pulse until nice and uniform.  Garnish with olive oil, paprika and parsley.",
-        "imgUrl": "http://localhost:3000/src/assets/images/babaganush.jpg"
+        "imgUrl": "https://firebasestorage.googleapis.com/v0/b/keto-react-app.appspot.com/o/images%2Fbabaganush.jpg?alt=media&token=5c6e0f11-3272-47f0-a44a-1f8da3370f0a"
     },
     {
         "title": "Brocoli Cheddar Soup",
