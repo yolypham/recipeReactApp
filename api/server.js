@@ -31,6 +31,8 @@ app.use(express.json());
 app.use(['/recipes'], require('./routes/recipe').router);
 app.use(['/users'], require('./routes/user').router);
 
+
+// for deploying to heroku, set root for static landing page
 app.use('/', express.static(
   path.join(__dirname, '../build')
 ))

@@ -86,7 +86,7 @@ class Header extends React.Component {
         const { classes, user } = this.props;
         const isMenuOpen = Boolean(anchorEl);
         const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-        console.log(user, 'in header');
+
         const userString = (user !== null ? `Welcome ${user[0].fname} ${user[0].lname}` : null);
 
         const renderLoggedInMenu = (

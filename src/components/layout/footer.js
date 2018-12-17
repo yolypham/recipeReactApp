@@ -30,25 +30,6 @@ const styles = theme => ({
     }
 });
 
-// const footers = [
-//     {
-//         title: 'EAT KETO Inc.',
-//         description: ['123 Main St', 'Toronto ON L2E 2G5', '(t) 302-123-4567', '(e) eatketo@email.com'],
-//     },
-//     {
-//         title: '',
-//         description: [],
-//     },
-//     {
-//         title: 'Resources',
-//         description: ['Resource', 'Resource name', 'Another resource', 'Final resource'],
-//     },
-//     {
-//         title: 'Legal',
-//         description: ['Privacy policy', 'Terms of use'],
-//     },
-// ];
-
 class Footer extends React.Component {
     render() {
         const { classes } = this.props;

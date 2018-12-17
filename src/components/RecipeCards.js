@@ -305,7 +305,6 @@ class RecipeCards extends Component {
             await this.handleCloseEditDialog();
             await this.props.loadRecipes();
             this.setState({ imgFileUpload: null, processing: false });
-            console.log(this.state)
           })
       } else {
         await this.props.updateRecipe(id, selectedRecipe);
