@@ -12,7 +12,6 @@ import Spinner from './Spinner';
 
 //material UI
 import { withStyles } from '@material-ui/core/styles';
-//import classNames from 'classnames';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
@@ -30,6 +29,7 @@ import Fab from '@material-ui/core/Fab';
 import Slide from '@material-ui/core/Slide';
 import TextField from '@material-ui/core/TextField';
 import Toolbar from '@material-ui/core/Toolbar';
+import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
@@ -59,11 +59,6 @@ const styles = theme => ({
       backgroundColor: '#D84315'
     }
   },
-  gridItem: {
-    minWidth: '270px',
-    maxWidth: '300px',
-    width: '300px'
-  },
   cardGrid: {
     backgroundColor: '#ffffff',
     padding: '10px'
@@ -74,7 +69,7 @@ const styles = theme => ({
     flexDirection: 'column',
   },
   cardMedia: {
-    paddingTop: '56.25%', // 16:9
+    paddingTop: '56.25%',
   },
   cardContent: {
     flexGrow: 1,
@@ -87,7 +82,6 @@ const styles = theme => ({
   container: {
     flexWrap: 'wrap',
     textAlign: 'center',
-    // backgroundColor: '#FBE9E7',
     backgroundColor: '#b3e5fc',
     height: '100%'
   },
@@ -107,17 +101,18 @@ const styles = theme => ({
     color: '#ffffff',
     "&:hover": {
       backgroundColor: '#D84315'
-    }
+    },
+    [theme.breakpoints.down('sm')]: {
+      float: 'none',
+      textAlign: 'center'
+    },
   },
   formControl: {
-    width: 900,
+    width: '80%',
     backgroundColor: '#ffffff',
     margin: theme.spacing.unit * 2,
     padding: '20px',
-    borderRadius: '1%',
-    [theme.breakpoints.down('sm')]: {
-      width: '370px',
-    },
+    borderRadius: '1%'
   },
 });
 
@@ -126,9 +121,6 @@ function Transition(props) {
 }
 
 class RecipeCards extends Component {
-  // constructor(props) {
-  //   super(props)
-  // }
 
   state = {
     openDetailDialog: false,
@@ -350,7 +342,7 @@ class RecipeCards extends Component {
         className={classes.button}
       >
         Update
-      </Button>)
+        </Button>)
     );
 
     // Add button
@@ -379,8 +371,7 @@ class RecipeCards extends Component {
     // Build recipe thumbnail cards
     const showRecipes = recipes.map(recipe => {
       return (
-        <Grid item key={recipe._id} sm={6} md={4} lg={3}
-          className={classes.gridItem}>
+        <Grid item key={recipe._id} xs={12} sm={6} md={3} lg={3} xl={3}>
           <Card className={classes.card}>
             <CardMedia
               className={classes.cardMedia}
@@ -397,18 +388,22 @@ class RecipeCards extends Component {
               </Typography>
 
               <div className="action-icons">
-                <Fab
-                  aria-label="Edit"
-                  size="small"
-                  className={classes.fab}>
-                  <EditIcon onClick={() => this.clickEditHandler(recipe)} />
-                </Fab>
-                <Fab
-                  aria-label="Delete"
-                  size="small"
-                  className={classes.fab}>
-                  <DeleteIcon onClick={() => this.clickDeleteHandler(recipe)} />
-                </Fab>
+                <Tooltip title="Update">
+                  <Fab
+                    aria-label="Edit"
+                    size="small"
+                    className={classes.fab}>
+                    <EditIcon onClick={() => this.clickEditHandler(recipe)} />
+                  </Fab>
+                </Tooltip>
+                <Tooltip title="Delete">
+                  <Fab
+                    aria-label="Delete"
+                    size="small"
+                    className={classes.fab}>
+                    <DeleteIcon onClick={() => this.clickDeleteHandler(recipe)} />
+                  </Fab>
+                </Tooltip>
               </div>
             </CardContent>
           </Card>
@@ -429,11 +424,7 @@ class RecipeCards extends Component {
             </Fab>
           </div>
 
-          <Grid
-            container
-            spacing={8}
-            alignContent={'center'}
-          >
+          <Grid container spacing={8}>
             {showRecipes}
           </Grid>
         </div>
@@ -494,6 +485,7 @@ class RecipeCards extends Component {
           </AppBar>
 
           <div className="modal-dialog">
+
             <form
               className={classes.container}
               noValidate

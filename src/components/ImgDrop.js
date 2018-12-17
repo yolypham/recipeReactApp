@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import Dropzone from 'react-dropzone';
 import PropTypes from 'prop-types';
 
+import Grid from '@material-ui/core/Grid';
+
 
 const imageMaxSize = 1000000000 //bytes
 const acceptedFileTypes = 'image/x-png, image/png, image/jpg, image/jpeg, image/svg, image/gif'
@@ -74,32 +76,27 @@ class ImgDrop extends Component {
     render() {
         const { imgSrc } = this.state
 
-        const dropzoneStyle = {
-            width: "200px",
-            height: "150px",
-            border: "dashed",
-            paddingTop: "20px",
-            marginRight: "30px",
-            marginLeft: "8px"
-        };
-
         return (
+
+            // <Grid container spacing={8}>
+            //     <Grid item xs={6}>
+            //         <Dropzone style={dropzoneStyle} onDrop={this.dropHandler} multiple={false}>Drop or click here to select image</Dropzone>
+            //     </Grid>
+            //     <Grid item xs={6}>
+            //         {imgSrc != null ?
+            //             <img src={imgSrc} alt="" width="280px" /> : ''}
+            //     </Grid>
+            // </Grid>
+
+
             <div className="imgDropZone">
                 <div>
-                    <Dropzone style={dropzoneStyle} onDrop={this.dropHandler} multiple={false}>Drop or click here to select image</Dropzone>
+                    <Dropzone className="dropzone" onDrop={this.dropHandler} multiple={false}>Drop or click here to select image</Dropzone>
                 </div>
                 <br />
                 <div>
-                    {imgSrc != null ? <img src={imgSrc} width="280px" height="150px" /> : ''}
+                    {imgSrc != null ? <img src={imgSrc} className="smImg" alt="" /> : ''}
                 </div>
-                {/* <table>
-                    <tbody>
-                        <tr>
-                            <td><Dropzone style={dropzoneStyle} onDrop={this.dropHandler} multiple={false}>Drop or click here to select image</Dropzone></td>
-                            <td>{imgSrc != null ? <img src={imgSrc} width="280px" height="150px" /> : ''}</td>
-                        </tr>
-                    </tbody>
-                </table> */}
             </div>
         )
     }

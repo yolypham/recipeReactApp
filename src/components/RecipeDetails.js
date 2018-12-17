@@ -16,9 +16,6 @@ const styles = theme => ({
 })
 
 class RecipeDetails extends Component {
-    // constructor(props) {
-    //     super(props)
-    // }
 
     render() {
         const { classes, recipe } = this.props;
@@ -53,7 +50,7 @@ class RecipeDetails extends Component {
 
                         </Grid>
                         <Grid item xs={6}>
-                            <img src={recipe.imgUrl} className="recipe-img" />
+                            <img src={recipe.imgUrl} className="recipe-img" alt={recipe.title} />
                         </Grid>
 
                         <Grid item xs={12}>
