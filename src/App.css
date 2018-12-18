@@ -17,6 +17,11 @@ body {
   background-color: #FBE9E7;
 }
 
+.logo {
+  width: 130px;
+  padding: 10px 20px;
+}
+
 .modal-dialog {
   background-color: #FBE9E7;
   /* background-color: #b3e5fc; */

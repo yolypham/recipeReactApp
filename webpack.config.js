@@ -74,7 +74,7 @@ module.exports = {
       template: __dirname + '/public/index.html',
       filename: 'index.html',
       inject: 'body',
-      favicon: './public/favicon.ico'
+      favicon: './public/eatketo.ico'
     }),
     new CopyWebpackPlugin([{ from: 'src/assets/images', to: 'images' }])
   ]

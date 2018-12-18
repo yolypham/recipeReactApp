@@ -7,9 +7,10 @@ import Typography from '@material-ui/core/Typography';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { withStyles } from '@material-ui/core/styles';
-import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
+
+import eatketoLogo from '../../assets/images/keto-eat.png';
 
 const styles = theme => ({
     root: {
@@ -135,12 +136,10 @@ class Header extends React.Component {
             <div className={classes.root}>
                 <AppBar position="fixed">
                     <Toolbar>
-                        <IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">
-                            <MenuIcon />
-                        </IconButton>
-                        <Typography className={classes.title} variant="h6" color="inherit" noWrap>
+                        <img src={eatketoLogo} alt="eat keto logo" className="logo" />
+                        {/* <Typography className={classes.title} variant="h6" color="inherit" noWrap>
                             Keto Recipes App
-                        </Typography>
+                        </Typography> */}
 
                         <div className={classes.grow} />
                         <div className={classes.sectionDesktop}>
