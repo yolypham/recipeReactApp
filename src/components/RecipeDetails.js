@@ -69,7 +69,7 @@ class RecipeDetails extends Component {
                             />
                         </Grid>
 
-                        <Grid item xs={12}>
+                        {/* <Grid item xs={12}>
                             <Typography variant="h6"
                                 color="textPrimary"
                                 gutterBottom >
@@ -83,7 +83,7 @@ class RecipeDetails extends Component {
                                 rowsMax="3"
                                 defaultValue={recipe.imgUrl}
                             />
-                        </Grid>
+                        </Grid> */}
 
                     </Grid>
                 </div>
