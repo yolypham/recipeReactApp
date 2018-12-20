@@ -2,9 +2,6 @@ import React, { Component } from 'react'
 import Dropzone from 'react-dropzone';
 import PropTypes from 'prop-types';
 
-import Grid from '@material-ui/core/Grid';
-
-
 const imageMaxSize = 1000000000 //bytes
 const acceptedFileTypes = 'image/x-png, image/png, image/jpg, image/jpeg, image/svg, image/gif'
 const acceptedFileTypesArray = acceptedFileTypes.split(",").map((item) => { return item.trim() })

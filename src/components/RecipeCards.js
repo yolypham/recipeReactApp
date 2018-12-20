@@ -22,6 +22,10 @@ import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit'
 import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
@@ -95,7 +99,7 @@ const styles = theme => ({
   button: {
     marginTop: theme.spacing.unit * 3,
     marginLeft: theme.spacing.unit,
-    width: 170,
+    width: 120,
     float: 'right',
     backgroundColor: '#0c5d3a',
     color: '#ffffff',
@@ -126,6 +130,7 @@ class RecipeCards extends Component {
     openDetailDialog: false,
     openAddDialog: false,
     openEditDialog: false,
+    openConfirmDeleteDialog: false,
     selectedRecipe: null,
     imgFileUpload: null,
     processing: false
@@ -163,6 +168,17 @@ class RecipeCards extends Component {
     this.setState({ openEditDialog: false });
   };
 
+  handleConfirmDeleteOpen = (selectedRecipe) => {
+    this.setState({
+      openConfirmDeleteDialog: true,
+      selectedRecipe: selectedRecipe
+    });
+  };
+
+  handleConfirmDeleteClose = () => {
+    this.setState({ openConfirmDeleteDialog: false });
+  };
+
   clickRecipeHandler(recipe) {
     this.setState({
       openDetailDialog: true,
@@ -170,10 +186,10 @@ class RecipeCards extends Component {
     })
   }
 
-  clickDeleteHandler = async (recipe) => {
-    const { _id } = recipe
+  clickDeleteHandler = async () => {
     try {
-      await this.props.deleteRecipe(_id);
+      this.handleConfirmDeleteClose();
+      await this.props.deleteRecipe(this.state.selectedRecipe._id);
       await this.props.loadRecipes();
     } catch (error) {
       console.log(error)
@@ -401,7 +417,7 @@ class RecipeCards extends Component {
                     aria-label="Delete"
                     size="small"
                     className={classes.fab}>
-                    <DeleteIcon onClick={() => this.clickDeleteHandler(recipe)} />
+                    <DeleteIcon onClick={() => this.handleConfirmDeleteOpen(recipe)} />
                   </Fab>
                 </Tooltip>
               </div>
@@ -611,6 +627,29 @@ class RecipeCards extends Component {
             </form>
             {ovelaySpinner}
           </div>
+        </Dialog>
+
+        {/* Delete confirm dialog */}
+        <Dialog
+          open={this.state.openConfirmDeleteDialog}
+          onClose={this.handleConfirmDeleteClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">{"Delete confirm"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Are you sure you want to delete this recipe?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions style={{ justifyContent: 'center' }}>
+            <Button className={classes.button} onClick={this.handleConfirmDeleteClose} >
+              Cancel
+            </Button>
+            <Button className={classes.button} onClick={this.clickDeleteHandler} autoFocus>
+              Delete
+            </Button>
+          </DialogActions>
         </Dialog>
 
       </main>

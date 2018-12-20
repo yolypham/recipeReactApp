@@ -18,9 +18,9 @@ main {
   background-color: #f5f5f5;
 }
 
-/* body {
-  
-} */
+body {
+  background-color: #f5f5f5; 
+}
 
 .logo {
   width: 130px;
@@ -53,7 +53,7 @@ main {
 
 .add-icon{
   float: right;
-  margin: 0px 5px 10px 0px;
+  margin: 15px 5px 10px 0px;
   font-size: 22px;
   color: #000000;
   font-weight: 500;

@@ -10,7 +10,6 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
 
 import eatketoLogo2 from '../../assets/images/keto-eat2.png';
-// import eatketoLogo from '../../assets/images/keto-eat.png';
 
 const styles = theme => ({
     root: {
