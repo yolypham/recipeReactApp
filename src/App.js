@@ -14,20 +14,20 @@ import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 const theme = createMuiTheme({
   palette: {
     primary: {
-      light: '#e6ffff',
-      main: '#2818a9',
-      dark: '#006db3',
+      light: '#9c786c',
+      main: '#4d394b',
+      dark: '#40241a',
       contrastText: '#ffffff',
     },
     secondary: {
-      light: '#7b5e57',
-      main: '#4e342e',
-      dark: '#260e04',
+      light: '#8f9bff',
+      main: '#536dfe',
+      dark: '#0043ca',
       contrastText: '#000000',
     },
     text: {
-      primary: '#1a237e',
-      secondary: '#000a12',
+      primary: '#4b2c20',
+      secondary: '#424242',
     }
     // error: will use the default color
   },

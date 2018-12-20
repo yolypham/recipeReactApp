@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { withStyles } from '@material-ui/core/styles';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
 
-import eatketoLogo from '../../assets/images/keto-eat.png';
+import eatketoLogo2 from '../../assets/images/keto-eat2.png';
+// import eatketoLogo from '../../assets/images/keto-eat.png';
 
 const styles = theme => ({
     root: {
@@ -136,10 +136,7 @@ class Header extends React.Component {
             <div className={classes.root}>
                 <AppBar position="fixed">
                     <Toolbar>
-                        <img src={eatketoLogo} alt="eat keto logo" className="logo" />
-                        {/* <Typography className={classes.title} variant="h6" color="inherit" noWrap>
-                            Keto Recipes App
-                        </Typography> */}
+                        <img src={eatketoLogo2} alt="eat keto logo" className="logo" />
 
                         <div className={classes.grow} />
                         <div className={classes.sectionDesktop}>

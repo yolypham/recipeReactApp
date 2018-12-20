@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 const styles = theme => ({
     container: {
         flexWrap: 'wrap',
-        backgroundColor: '#b3e5fc',
+        backgroundColor: '#80cbc4',
         height: '100%',
         padding: '5px'
     },

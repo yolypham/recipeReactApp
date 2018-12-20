@@ -53,10 +53,10 @@ const styles = theme => ({
   },
   fab: {
     margin: theme.spacing.unit,
-    backgroundColor: '#FF5722',
+    backgroundColor: '#0c5d3a',
     color: '#ffffff',
     "&:hover": {
-      backgroundColor: '#D84315'
+      backgroundColor: '#128854'
     }
   },
   cardGrid: {
@@ -73,7 +73,7 @@ const styles = theme => ({
   },
   cardContent: {
     flexGrow: 1,
-    backgroundColor: '#b3e5fc',
+    backgroundColor: '#80cbc4',
     padding: '5px',
     "&:last-child": {
       paddingBottom: '5px'
@@ -82,7 +82,7 @@ const styles = theme => ({
   container: {
     flexWrap: 'wrap',
     textAlign: 'center',
-    backgroundColor: '#b3e5fc',
+    backgroundColor: '#80cbc4',
     height: '100%'
   },
   typography: {
@@ -97,10 +97,10 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit,
     width: 170,
     float: 'right',
-    backgroundColor: '#FF5722',
+    backgroundColor: '#0c5d3a',
     color: '#ffffff',
     "&:hover": {
-      backgroundColor: '#D84315'
+      backgroundColor: '#128854'
     },
     [theme.breakpoints.down('sm')]: {
       float: 'none',
