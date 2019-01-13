@@ -83,11 +83,18 @@ class Header extends React.Component {
 
     render() {
         const { anchorEl, mobileMoreAnchorEl } = this.state;
-        const { classes, user } = this.props;
+        const { classes, currentUser, isDialogOpen, onLoginClick, onSignOutClick, onRegisterClick } = this.props;
         const isMenuOpen = Boolean(anchorEl);
         const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-        const userString = (user !== null ? `Welcome ${user[0].fname} ${user[0].lname}` : null);
+        if (isMenuOpen || isMobileMenuOpen) {
+            if (isDialogOpen) {
+                this.handleMenuClose()
+                this.handleMobileMenuClose()
+            }
+        }
+
+        const userString = (currentUser && currentUser !== null && currentUser.nickname ? `Welcome ${currentUser.nickname}` : null);
 
         const renderLoggedInMenu = (
             <Menu
@@ -97,8 +104,7 @@ class Header extends React.Component {
                 open={isMenuOpen}
                 onClose={this.handleMenuClose}
             >
-                <MenuItem>{userString}</MenuItem>
-                <MenuItem onClick={this.handleMenuClose}>Sign Out</MenuItem>
+                <MenuItem onClick={onSignOutClick}><div style={{ width: "200px" }}>Sign Out</div></MenuItem>
             </Menu>
         );
 
@@ -110,8 +116,9 @@ class Header extends React.Component {
                 open={isMenuOpen}
                 onClose={this.handleMenuClose}
             >
-                <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
-                <MenuItem onClick={this.handleMenuClose}>My account</MenuItem>
+                <MenuItem onClick={onLoginClick}>
+                    <b>Login</b>&nbsp;-&nbsp;to add and edit Recipes </MenuItem>
+                <MenuItem onClick={onRegisterClick}><b>Not Register?</b>&nbsp;Sign Up</MenuItem>
             </Menu>
         );
 
@@ -122,12 +129,9 @@ class Header extends React.Component {
                 transformOrigin={{ vertical: 'top', horizontal: 'right' }}
                 open={isMobileMenuOpen}
                 onClose={this.handleMobileMenuClose} >
-                <MenuItem onClick={this.handleProfileMenuOpen}>
-                    <IconButton color="inherit">
-                        <AccountCircle />
-                    </IconButton>
-                    <p>Profile</p>
-                </MenuItem>
+                <MenuItem onClick={onLoginClick}>
+                    <b>Login</b>&nbsp;-&nbsp;to add and edit Recipes </MenuItem>
+                <MenuItem onClick={onRegisterClick}><b>Not Register?</b>&nbsp;Sign Up</MenuItem>
             </Menu>
         );
 
@@ -139,6 +143,7 @@ class Header extends React.Component {
 
                         <div className={classes.grow} />
                         <div className={classes.sectionDesktop}>
+                            <div className="welcome">{userString}</div>
                             <IconButton
                                 aria-owns={isMenuOpen ? 'material-appbar' : undefined}
                                 aria-haspopup="true"
@@ -148,6 +153,7 @@ class Header extends React.Component {
                             </IconButton>
                         </div>
                         <div className={classes.sectionMobile}>
+                            <div className="welcome">{userString}</div>
                             <IconButton aria-haspopup="true" onClick={this.handleMobileMenuOpen} color="inherit">
                                 <MoreIcon />
                             </IconButton>
@@ -164,7 +170,10 @@ class Header extends React.Component {
 
 Header.propTypes = {
     classes: PropTypes.object.isRequired,
-    user: PropTypes.array
+    currentUser: PropTypes.object,
+    onLoginClick: PropTypes.func,
+    onSignOutClick: PropTypes.func,
+    onRegisterClick: PropTypes.func
 };
 
 export default withStyles(styles)(Header);

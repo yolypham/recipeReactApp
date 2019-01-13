@@ -6,11 +6,17 @@ const initialState = {
 
 export default function (state = initialState, action) {
     switch (action.type) {
-        case actionTypes.FETCH_USER:
+        case actionTypes.FETCH_USER || actionTypes.POST_LOGIN:
             return {
                 ...state,
-                user: action.payload
+                currentUser: action.payload
             };
+        case actionTypes.POST_SIGNOUT:
+            console.log('logout action', initialState);
+            return {
+                ...state,
+                currentUser: initialState
+            }
         default:
             return state;
     }

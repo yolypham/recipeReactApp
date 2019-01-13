@@ -5,8 +5,8 @@ const path = require('path');
 const seeds = require('./seeds/seeds');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const router = require('./routes');
 const express = require('express');
-
 
 const app = express();
 
@@ -28,8 +28,11 @@ app.use(express.urlencoded({ extended: true }));
 //this line needed for POST
 app.use(express.json());
 
-app.use(['/recipes'], require('./routes/recipe').router);
-app.use(['/users'], require('./routes/user').router);
+//app.use(router);
+app.use('/', router);
+// app.use('/recipes', require('./routes/recipe').router);
+// app.use('/users', require('./routes/user').router);
+
 
 
 // for deploying to heroku, set root for static landing page

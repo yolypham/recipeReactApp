@@ -2,9 +2,8 @@
 
 const express = require('express');
 const router = express.Router();
-
-
 const Recipe = require('../models/recipeModel');
+const { verifyToken } = require("../middleware/auth");
 
 //GET 
 router

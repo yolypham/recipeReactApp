@@ -51,12 +51,33 @@ body {
   float: right;
 }
 
+.recipeBy{
+  text-align: center;
+  padding: 10px;
+  color: #9c27b0;
+}
+
+.recipeListHeader{
+  float: left;
+  padding-top: 32px;
+  padding-bottom: 20px;
+  font-size: 22px;
+  color: #000000;
+  font-weight: 500;
+}
+
 .add-icon{
   float: right;
   margin: 15px 5px 10px 0px;
   font-size: 22px;
   color: #000000;
   font-weight: 500;
+}
+
+.welcome {
+  padding-top: 15px;
+  font-size: larger;
+  color: #ba68c8;
 }
 
 .recipe-img{
@@ -105,6 +126,9 @@ padding-right: 20px;
   .add-icon {
     float: none;
     text-align: center;
+  }
+  .recipeListHeader{
+    display: none;
   }
 }
 /* end */

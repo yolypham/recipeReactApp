@@ -34,6 +34,12 @@ class RecipeDetails extends Component {
 
                     <Grid container spacing={24} className="modal-dialog">
                         <Grid item xs={6}>
+                            <Typography variant="subtitle1"
+                                color="textSecondary"
+                                gutterBottom >
+                                Recipe by {recipe.user.nickname}
+                            </Typography>
+                            <div>&nbsp;</div>
                             <Typography variant="h6"
                                 color="textPrimary"
                                 gutterBottom >
@@ -86,8 +92,8 @@ class RecipeDetails extends Component {
                         </Grid> */}
 
                     </Grid>
-                </div>
-            </div>
+                </div >
+            </div >
         );
     }
 }

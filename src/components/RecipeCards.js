@@ -74,6 +74,9 @@ const styles = theme => ({
   },
   cardMedia: {
     paddingTop: '56.25%',
+    "&:hover": {
+      backgroundColor: '#128854'
+    }
   },
   cardContent: {
     flexGrow: 1,
@@ -231,11 +234,11 @@ class RecipeCards extends Component {
     //disable auto submit form
     e.preventDefault();
 
-    const { user } = this.props;
+    const { currentUser } = this.props;
     const newRecipe = this.state.form;
 
     //set the loged user
-    newRecipe.user = user[0]._id;
+    newRecipe.user = currentUser._id;
 
     try {
       this.setState({ processing: true });
@@ -331,10 +334,24 @@ class RecipeCards extends Component {
   }
 
   render() {
-    const { classes, recipes } = this.props;
+    const { classes, recipes, currentUser } = this.props;
     const { selectedRecipe, form, processing, imgFileUpload } = this.state;
 
     const hasValue = (selectedRecipe ? true : false)
+
+    const addNewRecipe = (currentUser && currentUser.nickname ?
+      (<div className="add-icon">
+        Add Recipe
+        <Fab
+          aria-label="Add"
+          size="small"
+          className={classes.fab}>
+          <AddIcon onClick={this.clickAddRecipeHandler} />
+        </Fab>
+      </div>)
+      :
+      ''
+    );
 
     //Update Button
     const enableUpdButton = selectedRecipe &&
@@ -386,12 +403,38 @@ class RecipeCards extends Component {
 
     // Build recipe thumbnail cards
     const showRecipes = recipes.map(recipe => {
+      // allow edit or delete only if recipe belongs to current user
+      const allowUpdate = (currentUser && currentUser.email === recipe.user.email ? true : false)
+      const editDeleteBtns = allowUpdate ? (
+        <div className="action-icons">
+          <Tooltip title="Update">
+            <Fab
+              aria-label="Edit"
+              size="small"
+              className={classes.fab}>
+              <EditIcon onClick={() => this.clickEditHandler(recipe)} />
+            </Fab>
+          </Tooltip>
+          <Tooltip title="Delete">
+            <Fab
+              aria-label="Delete"
+              size="small"
+              className={classes.fab}>
+              <DeleteIcon onClick={() => this.handleConfirmDeleteOpen(recipe)} />
+            </Fab>
+          </Tooltip>
+        </div>)
+        :
+        (<div className="recipeBy"> Recipe by {recipe.user.nickname} </div>);
+
+
       return (
         <Grid item key={recipe._id} xs={12} sm={6} md={3} lg={3} xl={3}>
           <Card className={classes.card}>
             <CardMedia
               className={classes.cardMedia}
               image={recipe.imgUrl}
+              alt="Click to view"
               onClick={() => this.clickRecipeHandler(recipe)}
             />
             <CardContent className={classes.cardContent}>
@@ -403,24 +446,8 @@ class RecipeCards extends Component {
                 {recipe.title}
               </Typography>
 
-              <div className="action-icons">
-                <Tooltip title="Update">
-                  <Fab
-                    aria-label="Edit"
-                    size="small"
-                    className={classes.fab}>
-                    <EditIcon onClick={() => this.clickEditHandler(recipe)} />
-                  </Fab>
-                </Tooltip>
-                <Tooltip title="Delete">
-                  <Fab
-                    aria-label="Delete"
-                    size="small"
-                    className={classes.fab}>
-                    <DeleteIcon onClick={() => this.handleConfirmDeleteOpen(recipe)} />
-                  </Fab>
-                </Tooltip>
-              </div>
+              {editDeleteBtns}
+
             </CardContent>
           </Card>
         </Grid>
@@ -430,15 +457,8 @@ class RecipeCards extends Component {
     return (
       <main>
         <div className={classes.layout}>
-          <div className="add-icon">
-            Add Recipe
-            <Fab
-              aria-label="Add"
-              size="small"
-              className={classes.fab}>
-              <AddIcon onClick={this.clickAddRecipeHandler} />
-            </Fab>
-          </div>
+          <div className="recipeListHeader">Recipes:</div>
+          {addNewRecipe}
 
           <Grid container spacing={8}>
             {showRecipes}
@@ -666,7 +686,7 @@ function mapStateToProps(state) {
 
 RecipeCards.propTypes = {
   classes: PropTypes.object.isRequired,
-  user: PropTypes.array
+  currentUser: PropTypes.object
 };
 
 export default connect(

@@ -1,7 +1,7 @@
 [
     {
-        "userid": "yolypham@email.com",
-        "fname": "Yoly",
-        "lname": "Pham"
+        "email": "test@email.com",
+        "password": "password",
+        "nickname": "love2eat"
     }
 ]
